@@ -1,0 +1,44 @@
+{% load static %}
+<html>
+
+<head>
+  <title>основное </title>
+  <link rel="stylesheet" href="{% static 'base.css' %}">
+</head>
+
+<body>
+  <a name="start">
+    <h2>Добрый день, <a href="ChangeProfileInfo.html">{{ user }}</a></h2>
+  </a>
+  <div class="row">
+    <div class="col">
+      <h1>Введите основные данные вашего автомобиля</h1>
+      <form method="post">
+        {% csrf_token %}
+        <table>
+          <tbody>
+            <tr>
+              <td><b style="margin-right: 15px;">Марка:</b></td>
+              <td>{{ form.auto }}</td>
+            </tr>
+            <tr>
+              <td><b style="margin-right: 15px;">Модель:</b> </td>
+              <td>{{ form.model }}</td>
+            </tr>
+            <tr>
+              <td><b style="margin-right: 15px;">Цвет:</b> </td>
+              <td>{{ form.color }}</td>
+            </tr>
+            <tr>
+              <td><b style="margin-right: 15px;">Год выпуска:</b> </td>
+              <td>{{ form.release_year }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <button type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <link href="{% static 'base.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <a href="/"><img src="{% static 'catlogo.jpg' %}" height="250px"></a>
+    </div>
+    <div class="title">
+      <a href="/">АВТОПРИЛОЖЕНИЕ</a>
+    </div>
+    <div class="menu">
+      {% if user.is_authenticated %}{% else %}<a href="#login">Вход</a>{% endif %}
+      <a href="#partnership">Сотрудничество</a>
+      <a href="#about">О нас</a>
+      <a href="#apps">Приложения</a>
+      {% if user.is_authenticated %}{% else %}<a href="#register">Регистрация</a>{% endif %}
+    </div>
+  </header>
+  <div id="content">
+    {% block content %}
+    {% if user.is_authenticated %}
+      <a href="{% url 'account' %}">Личный кабинет</a>
+    {% else %}
+      <h1 id="login">Вход</h1>
+      <div class="row">
+        <div class="col">
+          <form method="post">
+            {% csrf_token %}
+            <table>
+              <tbody>
+                <tr>
+                  <td><b style="margin-right: 15px;">Логин:</b></td>
+                  <td>{{ login_form.username }}</td>
+                </tr>
+                <tr>
+                  <td><b style="margin-right: 15px;">Пароль:</b> </td>
+                  <td>{{ login_form.password }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <input type="hidden" name="button-name" id="button-name" value="" />
+            <button type="submit" name="login-button" id="login-button" onclick="changeValue()">Войти</button>
+            <script>
+              function changeValue(){
+                document.getElementById('button-name').value="login"
+              }
+            </script>
+          </form>
+          
+        </div>
+      </div>
+    {% endif %}
+    <h1 id="about">О нас</h1>
+    <div class="row">
+      <div class="col">
+        Мы — компания, которая занимается упрощением предоставления услуг для вашего транспортного средства и не только.
+      </div>
+    </div>
+    <h1 id="partnership">Как с нами сотрудничать?</h1>
+    <div class="row">
+      <div class="col">
+        Иван Михайлович
+        <a href="mailto:alkorol98@mail.ru">alkorol98@mail.ru</a>
+      </div>
+    </div>
+    <h1 id="apps">Скачать приложение</h1>
+    <div class="row">
+      <div class="col">
+        <img src="https://images.squarespace-cdn.com/content/v1/5ca7a0a965a707bb2efd6593/1623775265316-R68UXL2RC990QW6H70XB/google+play+button+-+white.png" style="height:100px; padding-right: 15px;">
+        <img src="https://icon-library.com/images/download-app-store-icon/download-app-store-icon-9.jpg" style="height: 100px;">
+      </div>
+    </div>
+    {% if user.is_authenticated %}
+    {% else %}
+      <h1 id="register">Регистрация</h1>
+      <div class="row">
+        <div class="col">
+          <form method="post">
+            {% csrf_token %}
+            <table>
+              <tbody>
+                <tr>
+                  <td><b style="margin-right: 15px;">Введите логин:</b></td>
+                  <td>{{ registration_form.username }}</td>
+                </tr>
+                <tr>
+                  <td><b style="margin-right: 15px;">Придумайте пароль:</b> </td>
+                  <td>{{ registration_form.password1 }}</td>
+                </tr>
+                <tr>
+                  <td><b style="margin-right: 15px;">Подтвердите пароль:</b> </td>
+                  <td>{{ registration_form.password2 }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <input type="hidden" name="button-name" id="button-name" value="" />
+            <button type="submit" name="register-button" id="register-button">Зарегистрироваться</button>
+          </form>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+  {% endblock %}
+  </div>
+</body>
+
+</html>

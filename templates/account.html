@@ -1,0 +1,71 @@
+{% load static %}
+<html>
+
+<head>
+  <title>основное </title>
+  <link rel="stylesheet" href="{% static 'base.css' %}">
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <a href="/"><img src="{% static 'catlogo.jpg' %}" height="250px"></a>
+    </div>
+    <div class="title">
+      <a href="/">АВТОПРИЛОЖЕНИЕ</a>
+    </div>
+  </header>
+  <a name="start"><h2>Добрый день, <a href="ChangeProfileInfo.html">{{ user }}</a></h2></a>
+  <h1>Ваш автомобиль</h1>
+  <div class="row">
+    <div class="col">
+      <img src="{% static 'auto.jpg' %}">
+    </div>
+    <div class="col">
+      <h3>
+        <p>Марка: {{ account.auto }}</p>
+        <p>Модель: {{ account.model }}</p>
+        <p>Год выпуска: {{ account.release_year }}</p>
+        <p>Цвет: {{ account.color }}</p>
+      </h3>
+      <a href="">Редактировать информацию </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h1>Выбор услуги</h1>
+      <span class="custom-dropdown big">
+        <select>
+          <optgroup label="Ремонт">
+            <option value="1">Услуга 1</option>
+            <option value="2">Услуга 2</option>
+            <option value="3">Услуга 3</option>
+            <option value="4">Услуга 4</option>
+            <option value="5">Услуга 5</option>
+            <option value="6">Услуга 6</option>
+            <option value="7">Услуга 7</option>
+            <option value="8">Услуга 8</option>
+          </optgroup>
+          <optgroup label="Обслуживание">
+            <option value="9">Услуга 9</option>
+            <option value="10">Услуга 10</option>
+            <option value="11">Услуга 11</option>
+            <option value="12">Услуга 12</option>
+            <option value="13">Услуга 13</option>
+            <option value="14">Услуга 14</option>
+            <option value="15">Услуга 15</option>
+          </optgroup>
+        </select>
+      </span>
+      <button id="button" onclick="countdownTimeStart()">
+        <img src="{% static 'icon.png' %}"
+          style="height: 25px; vertical-align: middle; padding-right: 5px;">
+        Начать поиск исполнителя
+      </button>
+      <p class="timer" id="timer"></p>
+      <script src="{% static 'timer.js' %}"></script>
+    </div>
+  </div>
+</body>
+
+</html>
