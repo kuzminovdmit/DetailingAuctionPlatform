@@ -18,8 +18,8 @@
     </div>
     <div class="menu">
       {% if user.is_authenticated %}{% else %}<a href="#login">Вход</a>{% endif %}
-      <a href="#partnership">Сотрудничество</a>
       <a href="#about">О нас</a>
+      <a href="#partnership">Сотрудничество</a>
       <a href="#apps">Приложения</a>
       {% if user.is_authenticated %}{% else %}<a href="#register">Регистрация</a>{% endif %}
     </div>
@@ -27,7 +27,7 @@
   <div id="content">
     {% block content %}
     {% if user.is_authenticated %}
-      <a href="{% url 'account' %}">Личный кабинет</a>
+      <a href="{% url 'car' %}">Личный кабинет</a>
     {% else %}
       <h1 id="login">Вход</h1>
       <div class="row">
@@ -54,14 +54,13 @@
               }
             </script>
           </form>
-          
         </div>
       </div>
     {% endif %}
     <h1 id="about">О нас</h1>
-    <div class="row">
+    <div class="row" style="max-width: 900px; margin-right: auto; margin-left: auto">
       <div class="col">
-        Мы — компания, которая занимается упрощением предоставления услуг для вашего транспортного средства и не только.
+        Мы компания, которая занимается упрощением предоставления услуг для вашего транспортного средства и не только. С нами сотрудничают большое количество известных компаний, занимающихся ремонтом и обслуживанием вашего автомобиля. Наши партнеры предоставляют только высококачественные услуги по низким ценам, убедитесь в этом сами!
       </div>
     </div>
     <h1 id="partnership">Как с нами сотрудничать?</h1>
@@ -74,8 +73,12 @@
     <h1 id="apps">Скачать приложение</h1>
     <div class="row">
       <div class="col">
-        <img src="https://images.squarespace-cdn.com/content/v1/5ca7a0a965a707bb2efd6593/1623775265316-R68UXL2RC990QW6H70XB/google+play+button+-+white.png" style="height:100px; padding-right: 15px;">
-        <img src="https://icon-library.com/images/download-app-store-icon/download-app-store-icon-9.jpg" style="height: 100px;">
+        <a href="https://play.google.com/store/apps?hl=ru">
+          <img src="https://images.squarespace-cdn.com/content/v1/5ca7a0a965a707bb2efd6593/1623775265316-R68UXL2RC990QW6H70XB/google+play+button+-+white.png" style="height:100px; padding-right: 15px;">
+        </a>
+        <a href="https://apps.apple.com">
+          <img src="https://icon-library.com/images/download-app-store-icon/download-app-store-icon-9.jpg" style="height: 100px;">
+        </a>
       </div>
     </div>
     {% if user.is_authenticated %}
