@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{% block title %}{% endblock %} - AutoApp</title>
+  <link href="{% static 'base.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <a href="/"><img src="{% static 'catlogo.jpg' %}" height="250px"></a>
+    </div>
+    <div class="title">
+      <a href="/">АВТОПРИЛОЖЕНИЕ</a>
+    </div>
+    <div class="menu">
+      {% if user.is_authenticated %}{% else %}<a href="#login">Вход</a>{% endif %}
+      <a href="#about">О нас</a>
+      <a href="#partnership">Сотрудничество</a>
+      <a href="#apps">Приложения</a>
+      {% if user.is_authenticated %}{% else %}<a href="#register">Регистрация</a>{% endif %}
+    </div>
+  </header>
+  <div id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+
+</html>

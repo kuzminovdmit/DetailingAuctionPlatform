@@ -1,14 +1,29 @@
-from django.utils import timezone
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LogoutView, PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 
 
 from .forms import CarCreationForm, ServiceChoiceForm
 from .models import Auction, Car, Company, Order, Service, auction_done
+
+
+class LogoutView(LoginRequiredMixin, LogoutView):
+    template_name = 'logout.html'
+
+
+class PasswordChangeView(
+    SuccessMessageMixin, LoginRequiredMixin, PasswordChangeView
+):
+    template_name = 'password_change.html'
+    success_url = reverse_lazy('index')
+    success_message = 'Пароль пользователя изменен'
 
 
 def index(request):
@@ -84,8 +99,11 @@ def car(request):
         if request.method == 'POST':
             form = ServiceChoiceForm(request.POST)
             if form.is_valid():
-                auction = Auction.objects.create(car=car,
-                    chosen_service=Service.objects.get(id=form.cleaned_data.get('chosen_service'))
+                auction = Auction.objects.create(
+                    car=car,
+                    chosen_service=Service.objects.get(
+                        id=form.cleaned_data.get('chosen_service')
+                    )
                 )
             else:
                 auction = None
@@ -94,6 +112,7 @@ def car(request):
             form = ServiceChoiceForm()
 
         auction = None
+    
     return render(request, 'car.html', {
         'user': request.user,
         'car': car,
