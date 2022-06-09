@@ -1,0 +1,196 @@
+{% load static %}
+
+<div class="row">
+  <div class="col-lg-4 col-md-7 col-sm-6">
+    <div class="row row-cols-1 g-2" {% if auction.is_finished %}{% elif auction %}onload="countdownTimeStart()" {% endif %}>
+      <div class="col">
+        <div class="card bg-dark">
+          <img src="https://автовыхлоп911.рф/wp-content/uploads/2018-lada-kalina-cross-2.jpg" class="card-img-top">
+          <div class="card-body">
+            <dl class="row lead">
+              <dt class="col-sm-6">Марка</dt>
+              <dd class="col-sm-6">{{ car.brand }}</dd>
+              <dt class="col-sm-6">Модель</dt>
+              <dd class="col-sm-6">{{ car.model }}</dd>
+              <dt class="col-sm-6">Год выпуска</dt>
+              <dd class="col-sm-6">{{ car.release_year }}</dd>
+              <dt class="col-sm-6">Цвет</dt>
+              <dd class="col-sm-6">{{ car.color }}</dd>
+            </dl>
+            <a href="#" class="btn btn-primary">Редактировать данные</a>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card bg-dark">
+          <div class="card-body">
+            <p class="card-text"><small class="text-muted">Иван Михайлович <a
+                  href="mailto:alkorol98@mail.ru">alkorol98@mail.ru</a></small></p>
+            <div class="row row-cols-auto">
+              <div class="col mt-3">
+                <a href="https://play.google.com/store/">
+                  <img class="img-fluid" src="{% static 'img/google-play.png' %}" style="height: 5rem;">
+                </a>
+              </div>
+              <div class="col mt-3">
+                <a href="https://apps.apple.com">
+                  <img class="img-fluid" src="{% static 'img/app-store.png' %}" style="height: 5rem;">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-8 col-md-7 col-sm-6">
+    <div class="row">
+      {% if auction.is_finished %}
+      <div class="row">
+        <div class="col">
+          Подбор завершён!
+          <p><b>Услуга: </b>{{ auction.chosen_service }}</p>
+          <p><b>Исполнитель: </b>{{ auction.order_set.first.company }}</p>
+          <p><b>Цена: </b>{{ auction.order_set.first.cost }} ₽</p>
+        </div>
+      </div>
+      {% else %}
+      <div class="row">
+        <div class="col">
+          <h1>Выбор услуги</h1>
+          <form method="post">
+            {% csrf_token %}
+            <div class="input-group">
+              <select class="form-select" id="inputGroupSelect01" name="chosen_service">
+                <option selected>Услуга</option>
+                <optgroup label="Ремонт">
+                  {% for service in repair %}
+                  <option value="{{ service.id }}">{{ service }}</option>
+                  {% endfor %}
+                </optgroup>
+                <optgroup label="Обслуживание">
+                  {% for service in maintenance %}
+                  <option value="{{ service.id }}">{{ service }}</option>
+                  {% endfor %}
+                </optgroup>
+              </select>
+              <button id="button" class="btn btn-primary btn" type="submit">
+                Начать поиск исполнителя
+              </button>
+            </div>
+            <p class="timer" id="timer"></p>
+          </form>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    <div class="row">
+      <h1>Услуги в процессе выполнения</h1>
+      <div class="row row-cols-1 row-cols-md-2 g-2">
+        <div class="col">
+          <div class="card bg-dark">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card bg-dark">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card bg-dark">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card bg-dark">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <h1>Выполненные услуги</h1>
+      <div class="row row-cols-1 row-cols-md-2 g-2">
+        <div class="col">
+          <div class="card bg-dark">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card bg-dark">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card bg-dark">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card bg-dark">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+<script src="{% static 'js/timer.js' %}"></script>

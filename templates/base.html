@@ -1,31 +1,63 @@
 {% load static %}
+
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 
 <head>
-  <title>{% block title %}{% endblock %} - AutoApp</title>
-  <link href="{% static 'base.css' %}" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>Django Auto App</title>
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </head>
 
 <body>
-  <header>
-    <div class="logo">
-      <a href="/"><img src="{% static 'catlogo.jpg' %}" height="250px"></a>
-    </div>
-    <div class="title">
-      <a href="/">АВТОПРИЛОЖЕНИЕ</a>
-    </div>
-    <div class="menu">
-      {% if user.is_authenticated %}{% else %}<a href="#login">Вход</a>{% endif %}
-      <a href="#about">О нас</a>
-      <a href="#partnership">Сотрудничество</a>
-      <a href="#apps">Приложения</a>
-      {% if user.is_authenticated %}{% else %}<a href="#register">Регистрация</a>{% endif %}
-    </div>
-  </header>
-  <div id="content">
-    {% block content %}
-    {% endblock %}
+  <nav class="navbar navbar-expand-lg navbar-dark p-5">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+        <img src="{% static 'img/logo.png' %}">
+      </a>
+      <a class="navbar-brand" href="/">
+        Django Auto App
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+        aria-controls="navbarText" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          {% if password_change %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'dashboard' %}">Вернуться обратно</a>
+            </li>
+          {% endif %}
+          {% if car %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'password_change' %}">Изменить пароль</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}">Выйти из аккаунта</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+  </nav>
+  <div class="container-sm">
+    {% if request.user.is_authenticated %}
+      {% if password_change %}
+        {% block content %}
+        {% endblock %}
+      {% else %}
+        {% if car %}
+          {% include 'car_service.html' %}
+        {% else %}
+          {% include 'car_create.html' %}
+        {% endif %}
+      {% endif %}
+    {% else %}
+      {% include 'auth.html' %}
+    {% endif %}
   </div>
 </body>
 

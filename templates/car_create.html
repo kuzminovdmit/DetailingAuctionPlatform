@@ -1,44 +1,39 @@
-{% load static %}
-<html>
-
-<head>
-  <title>основное </title>
-  <link rel="stylesheet" href="{% static 'base.css' %}">
-</head>
-
-<body>
-  <a name="start">
-    <h2>Добрый день, <a href="ChangeProfileInfo.html">{{ user }}</a></h2>
-  </a>
-  <div class="row">
-    <div class="col">
-      <h1>Введите основные данные вашего автомобиля</h1>
-      <form method="post">
-        {% csrf_token %}
-        <table>
-          <tbody>
-            <tr>
-              <td><b style="margin-right: 15px;">Марка:</b></td>
-              <td>{{ form.brand }}</td>
-            </tr>
-            <tr>
-              <td><b style="margin-right: 15px;">Модель:</b> </td>
-              <td>{{ form.model }}</td>
-            </tr>
-            <tr>
-              <td><b style="margin-right: 15px;">Цвет:</b> </td>
-              <td>{{ form.color }}</td>
-            </tr>
-            <tr>
-              <td><b style="margin-right: 15px;">Год выпуска:</b> </td>
-              <td>{{ form.release_year }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <button type="submit">Сохранить</button>
-      </form>
+<div class="card bg-dark p-3 mb-3">
+  <div class="row g-0">
+    <div class="col-lg-6 col-md-12 col-sm-12">
+      <div class="card-body">
+        <div class="row row-cols-auto">
+          <img src="https://openclipart.org/image/800px/176709" style="filter: invert(100%);">
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12 col-sm-12">
+      <div class="card-body">
+        <h1>Введите данные автомобиля</h1>
+        <form method="post">
+          {% csrf_token %}
+          {{ car_form.errors }}
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="brand" id="id_brand" maxlength="128" required placeholder="brand">
+            <label for="brand">Марка</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="model" id="id_model" maxlength="128" required placeholder="model">
+            <label for="model">Модель</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="color" id="id_color" maxlength="128" required placeholder="color">
+            <label for="color">Цвет</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="release_year" id="id_release_year" maxlength="4" required placeholder="release_year">
+            <label for="release_year">Год выпуска</label>
+          </div>
+          <div class="mb-3 d-flex justify-content-center">
+            <button class="btn btn-primary" type="submit">Сохранить</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</body>
-
-</html>
+</div>

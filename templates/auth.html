@@ -1,0 +1,131 @@
+{% load static %}
+
+<div class="card bg-dark p-3 mb-3">
+  <div class="row g-0">
+    <div class="col-lg-8 col-md-6 col-sm-12">
+      <div class="card-body">
+        <h1 class="card-title">Django Auto App</h1>
+        <p class="mt-3 card-text">
+          Мы компания, которая занимается упрощением предоставления услуг для вашего транспортного средства и не только. С
+          нами сотрудничают большое количество известных компаний, занимающихся ремонтом и обслуживанием вашего автомобиля.
+          Наши партнеры предоставляют только высококачественные услуги по низким ценам, убедитесь в этом сами!
+        </p>
+        <p class="card-text"><small class="text-muted">Иван Михайлович <a href="mailto:alkorol98@mail.ru">alkorol98@mail.ru</a></small></p>
+        <div class="row row-cols-auto">
+          <div class="col mt-3">
+            <a href="https://play.google.com/store/">
+              <img class="img-fluid" src="{% static 'img/google-play.png' %}" style="height: 5rem;">
+            </a>
+          </div>
+          <div class="col mt-3">
+            <a href="https://apps.apple.com">
+              <img class="img-fluid" src="{% static 'img/app-store.png' %}" style="height: 5rem;">
+            </a>
+          </div>  
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card-body">
+        <div class="enter">
+          <div class="forms">
+            <div class="form login px-1">
+              <div class="btn-group btn-group-lg mb-3 d-flex" role="group">
+                <button type="button" class="btn btn-primary w-100">Вход</button>
+                <button type="button" class="btn btn-outline-primary w-100 signup-link">Регистрация</button>
+              </div>
+              <form class="form-signin" action="{% url 'sign_in' %}" method="post">
+                {% csrf_token %}
+                {{ login_form.errors }}
+                <div class="form-floating">
+                  <input type="text" class="form-control" name="username" id="id_username" placeholder="username">
+                  <label for="id_username">Логин</label>
+                </div>
+                <div class="form-floating">
+                  <input type="password" class="form-control" name="password" id="id_password" placeholder="password">
+                  <label for="id_for_password">Пароль</label>
+                </div>
+                <div class="mb-3 row">
+                  <div class="col">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                      <label class="form-check-label" for="flexCheckDefault">Запомнить меня</label>
+                    </div>
+                  </div>
+                  <div class="col text-end">
+                    <a href="#">Забыли пароль?</a>
+                  </div>
+                </div>
+                <div class="mb-3 d-flex justify-content-center">
+                  <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
+                </div>
+              </form>
+            </div>
+            <div class="form signup px-1">
+              <div class="btn-group btn-group-lg mb-3 d-flex" role="group">
+                <button type="button" class="btn btn-outline-primary w-100 login-link">Вход</button>
+                <button type="button" class="btn btn-primary w-100">Регистрация</button>
+              </div>
+              <form class="form-signin" action="{% url 'sign_up' %}" method="post">
+                {% csrf_token %}
+                {{ registration_form.errors }}
+                <div class="form-floating">     
+                  <input type="text" class="form-control" name="username" id="id_username" placeholder="username">
+                  <label for="id_username">Логин</label>
+                </div>
+                <div class="form-floating">
+                  <input type="password" class="form-control" name="password1" id="id_for_password1" placeholder="password">
+                  <label for="id_for_password1">Пароль</label>
+                </div>
+                <div class="form-floating">
+                  <input type="password" class="form-control" name="password2" id="id_for_password2" placeholder="password">
+                  <label for="id_for_password2">Пароль (повторно)</label>
+                </div>
+                <div class="mb-3 d-flex justify-content-center">
+                  <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const enter = document.querySelector(".enter"),
+    pwShowHide = document.querySelectorAll(".showHidePw"),
+    pwFields = document.querySelectorAll(".password"),
+    signUp = document.querySelector(".signup-link"),
+    login = document.querySelector(".login-link");
+
+  pwShowHide.forEach(eyeIcon => {
+    eyeIcon.addEventListener("click", () => {
+      pwFields.forEach(pwField => {
+        if (pwField.type === "password") {
+          pwField.type = "text";
+
+          pwShowHide.forEach(icon => {
+            icon.classList.replace("uil-eye-slash", "uil-eye");
+          })
+        } else {
+          pwField.type = "password";
+
+          pwShowHide.forEach(icon => {
+            icon.classList.replace("uil-eye", "uil-eye-slash");
+          })
+        }
+      })
+    })
+  })
+
+  // js code to appear signup and login form
+  signUp.addEventListener("click", () => {
+    enter.classList.add("active");
+  });
+  login.addEventListener("click", () => {
+    enter.classList.remove("active");
+  });
+
+</script>
