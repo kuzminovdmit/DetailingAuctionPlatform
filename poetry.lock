@@ -39,15 +39,17 @@ Django = ">=3.2"
 sqlparse = ">=0.2.0"
 
 [[package]]
-name = "python-dotenv"
-version = "0.20.0"
-description = "Read key-value pairs from a .env file and set them as environment variables"
+name = "django-environ"
+version = "0.9.0"
+description = "A package that allows you to utilize 12factor inspired environment variables to configure your Django application."
 category = "main"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.4,<4"
 
 [package.extras]
-cli = ["click (>=5.0)"]
+develop = ["coverage[toml] (>=5.0a4)", "pytest (>=4.6.11)", "furo (>=2021.8.17b43,<2021.9.0)", "sphinx (>=3.5.0)", "sphinx-notfound-page"]
+docs = ["furo (>=2021.8.17b43,<2021.9.0)", "sphinx (>=3.5.0)", "sphinx-notfound-page"]
+testing = ["coverage[toml] (>=5.0a4)", "pytest (>=4.6.11)"]
 
 [[package]]
 name = "sqlparse"
@@ -68,7 +70,7 @@ python-versions = ">=2"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "00b3915dfd2639c44e968ce26a8dd2ed9a6a41359eeca58c60e2dc4af7402e2d"
+content-hash = "bd125d3b0618ceb783168bfb25623ea1c47e592cb90823ca54b6fcc1c1eab5fc"
 
 [metadata.files]
 asgiref = [
@@ -83,9 +85,9 @@ django-debug-toolbar = [
     {file = "django-debug-toolbar-3.4.0.tar.gz", hash = "sha256:ae6bec2c1ce0e6900b0ab0443e1427eb233d8e6f57a84a0b2705eeecb8874e22"},
     {file = "django_debug_toolbar-3.4.0-py3-none-any.whl", hash = "sha256:42c1c2e9dc05bb57b53d641e3a6d131fc031b92377b34ae32e604a1fe439bb83"},
 ]
-python-dotenv = [
-    {file = "python-dotenv-0.20.0.tar.gz", hash = "sha256:b7e3b04a59693c42c36f9ab1cc2acc46fa5df8c78e178fc33a8d4cd05c8d498f"},
-    {file = "python_dotenv-0.20.0-py3-none-any.whl", hash = "sha256:d92a187be61fe482e4fd675b6d52200e7be63a12b724abbf931a40ce4fa92938"},
+django-environ = [
+    {file = "django-environ-0.9.0.tar.gz", hash = "sha256:bff5381533056328c9ac02f71790bd5bf1cea81b1beeb648f28b81c9e83e0a21"},
+    {file = "django_environ-0.9.0-py2.py3-none-any.whl", hash = "sha256:f21a5ef8cc603da1870bbf9a09b7e5577ab5f6da451b843dbcc721a7bca6b3d9"},
 ]
 sqlparse = [
     {file = "sqlparse-0.4.2-py3-none-any.whl", hash = "sha256:48719e356bb8b42991bdbb1e8b83223757b93789c00910a616a071910ca4a64d"},

@@ -1,29 +1,23 @@
-import os
 from pathlib import Path
 
-from dotenv import load_dotenv
+import environ
 
-
-load_dotenv()
+env = environ.Env()
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.getenv("SECRET_KEY")
-DEBUG = os.getenv("DEBUG")
+environ.Env.read_env(BASE_DIR / 'autoapp/.env')
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env('DEBUG')
 
-DJANGO_APPS = [
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
-THIRD_PARTY_APPS = [
 
-]
-LOCAL_APPS = [
     'accounts',
 ]
-INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
 
 DATABASES = {
     'default': {
@@ -48,7 +42,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
+            BASE_DIR / 'templates',
             'templates',
         ],
         'APP_DIRS': True,
@@ -113,4 +107,4 @@ else:
     CSRF_COOKIE_SECURE = True
     SECURE_BROWSER_XSS_FILTER = True
 
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    STATIC_ROOT = BASE_DIR / 'static'
