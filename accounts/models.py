@@ -1,8 +1,7 @@
 from datetime import timedelta
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver, Signal
+from django.utils import timezone
 
 
 class Car(models.Model):
@@ -13,7 +12,18 @@ class Car(models.Model):
     model = models.CharField(max_length=128)
     
     def __str__(self) -> str:
-        return f"Автомобиль клиента {self.client.username}"
+        return f'Автомобиль №{self.id}'
+
+    def get_orders(self, is_completed=False):
+        auctions = self.auction_set.select_related(
+            'chosen_service').prefetch_related('order_set').all()
+        completed_orders = Order.objects.none()
+
+        for auction in auctions:
+            completed_orders = completed_orders.union(
+                auction.order_set.filter(is_completed=is_completed))
+
+        return completed_orders
 
 
 class Company(models.Model):
@@ -44,31 +54,28 @@ class Service(models.Model):
         return self.name
 
 
+def get_default_timer_end():
+    return timezone.now() + timedelta(minutes=1)
+
+
 class Auction(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     chosen_service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    is_finished = models.BooleanField(default=False)
     timer_start = models.DateTimeField(auto_now_add=True)
+    timer_end = models.DateTimeField(default=get_default_timer_end)
+    is_company_chosen = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Аукцион по предоставлению услуги {self.chosen_service} для {self.car}, начавшийся в {self.timer_start}"
-
-    def timer_end(self):
-        return self.timer_start + timedelta(minutes=1)
-
-
-auction_done = Signal()
-
-@receiver(auction_done, sender=Auction)
-def finish_auction(sender, instance, created, **kwargs):
-    instance.is_finished = True
-    instance.save()
+        return f'Аукцион №{self.id}'
 
 
 class Order(models.Model):
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     cost = models.PositiveSmallIntegerField(default=0)
+    date_started = models.DateTimeField(auto_now_add=True)
+    date_completed = models.DateTimeField(default=timezone.now)
+    is_completed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Услуга {self.auction.chosen_service}, выполняемая {self.company} для {self.auction.car}"
+        return f'Заказ №{self.id}'

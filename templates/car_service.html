@@ -55,139 +55,85 @@
         </div>
       </div>
       {% else %}
+
       <div class="row">
-        <div class="col">
-          <h1>Выбор услуги</h1>
-          <form method="post">
-            {% csrf_token %}
-            <div class="input-group">
-              <select class="form-select" id="inputGroupSelect01" name="chosen_service">
-                <option selected>Услуга</option>
-                <optgroup label="Ремонт">
-                  {% for service in repair %}
-                  <option value="{{ service.id }}">{{ service }}</option>
-                  {% endfor %}
-                </optgroup>
-                <optgroup label="Обслуживание">
-                  {% for service in maintenance %}
-                  <option value="{{ service.id }}">{{ service }}</option>
-                  {% endfor %}
-                </optgroup>
-              </select>
-              <button id="button" class="btn btn-primary btn" type="submit">
-                Начать поиск исполнителя
-              </button>
+        <div class="card bg-dark">
+          <div class="row g-0">
+            <div class="col-md-5">
+              <div class="card-body">
+                <form method="post">
+                  <div class="row g-3">
+                    <div class="col-12">
+                      <p class="card-text"><small class="text-muted">Список доступных услуг</small></p>
+                      {% csrf_token %}
+                      {% regroup services by get_category_display as categories %}
+                      <select class="form-select" id="inputGroupSelect01" name="chosen_service">
+                        <option selected>Выбрать услугу</option>
+                        {% for category in categories %}
+                          <optgroup label="{{ category.grouper }}">
+                            {% for service in category.list %}
+                              <option value="{{ service.id }}">{{ service }}</option>
+                            {% endfor %}
+                          </optgroup>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-12">
+                      <button id="button" class="btn btn-primary btn" type="submit">Искать исполнителя</button>
+                    </div>
+                  </div>
+                  <p class="timer" id="timer"></p>
+                </form>
+              </div>
             </div>
-            <p class="timer" id="timer"></p>
-          </form>
+            <div class="col-md-7">
+              <div class="card-body">
+                <h5 class="card-title">Заказ услуги</h5>
+                <p class="card-text">
+                  После выбора необходимой услуги из списка предложенных и нажатия кнопки поиска откроется часовой аукцион
+                  среди компаний, по истечение которого будет выбран исполнитель.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       {% endif %}
     </div>
-    <div class="row">
-      <h1>Услуги в процессе выполнения</h1>
+    <div class="row mt-5">
+      <h2>Заказы в процессе выполнения</h2>
       <div class="row row-cols-1 row-cols-md-2 g-2">
-        <div class="col">
-          <div class="card bg-dark">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card bg-dark">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Last updated 3 mins ago</small>
+        {% for order in orders_in_progress %}
+          <div class="col">
+            <div class="card bg-dark">
+              <div class="card-body">
+                <h5 class="card-title"><span class="badge bg-secondary">{{ order.auction.chosen_service.get_category_display }}</span> {{ order.auction.chosen_service.name }}</h5>
+                <h6 class="card-text">Выполняет компания <a href="">{{ order.company }}</a></h6>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">{{ order.auction.timer_end }}</small>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col">
-          <div class="card bg-dark">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card bg-dark">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
-    <div class="row">
-      <h1>Выполненные услуги</h1>
+    <div class="row mt-5">
+      <h2>Выполненные заказы</h2>
       <div class="row row-cols-1 row-cols-md-2 g-2">
-        <div class="col">
-          <div class="card bg-dark">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card bg-dark">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Last updated 3 mins ago</small>
+        {% for order in completed_orders %}
+          <div class="col">
+            <div class="card bg-dark">
+              <div class="card-body">
+                <h5 class="card-title"><span class="badge bg-secondary">{{ order.auction.chosen_service.get_category_display }}</span> {{ order.auction.chosen_service.name }}</h5>
+                <h6 class="card-text"><strong>Исполнитель:</strong> <a href="">{{ order.company }}</a></h6>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Выполнено {{ order.auction.timer_end }}</small>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col">
-          <div class="card bg-dark">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card bg-dark">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </div>
