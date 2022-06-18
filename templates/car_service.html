@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="col-lg-4 col-md-7 col-sm-6">
-    <div class="row row-cols-1 g-2" {% if auction.is_finished %}{% elif auction %}onload="countdownTimeStart()" {% endif %}>
+    <div class="row row-cols-1 g-2">
       <div class="col">
         <div class="card bg-dark">
           <img src="https://автовыхлоп911.рф/wp-content/uploads/2018-lada-kalina-cross-2.jpg" class="card-img-top">
@@ -21,151 +21,84 @@
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="card bg-dark">
-          <div class="card-body">
-            <p class="card-text"><small class="text-muted">Иван Михайлович <a
-                  href="mailto:alkorol98@mail.ru">alkorol98@mail.ru</a></small></p>
-            <div class="row row-cols-auto">
-              <div class="col mt-3">
-                <a href="https://play.google.com/store/">
-                  <img class="img-fluid" src="{% static 'img/google-play.png' %}" style="height: 5rem;">
-                </a>
-              </div>
-              <div class="col mt-3">
-                <a href="https://apps.apple.com">
-                  <img class="img-fluid" src="{% static 'img/app-store.png' %}" style="height: 5rem;">
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
   <div class="col-lg-8 col-md-7 col-sm-6">
     <div class="row">
-      {% if auction.is_finished %}
-      <div class="row">
-        <div class="col">
-          Подбор завершён!
-          <p><b>Услуга: </b>{{ auction.chosen_service }}</p>
-          <p><b>Исполнитель: </b>{{ auction.order_set.first.company }}</p>
-          <p><b>Цена: </b>{{ auction.order_set.first.cost }} ₽</p>
-        </div>
-      </div>
-      {% else %}
-
-      <div class="row">
-        <div class="card bg-dark">
-          <div class="row g-0">
-            <div class="col-md-5">
-              <div class="card-body">
-                <form method="post">
-                  <div class="row g-3">
-                    <div class="col-12">
-                      <p class="card-text"><small class="text-muted">Список доступных услуг</small></p>
-                      {% csrf_token %}
-                      {% regroup services by get_category_display as categories %}
-                      <select class="form-select" id="inputGroupSelect01" name="chosen_service">
-                        <option selected>Выбрать услугу</option>
-                        {% for category in categories %}
-                          <optgroup label="{{ category.grouper }}">
-                            {% for service in category.list %}
-                              <option value="{{ service.id }}">{{ service }}</option>
-                            {% endfor %}
-                          </optgroup>
-                        {% endfor %}
-                      </select>
-                    </div>
-                    <div class="col-12">
-                      <button id="button" class="btn btn-primary btn" type="submit">Искать исполнителя</button>
-                    </div>
+      <div class="card bg-dark">
+        <h2 class="card-title ms-3 mt-4">Заказ услуги</h2>
+        <div class="row g-0">
+          <div class="col-md-5">
+            <div class="card-body">
+              <form method="post" hx-post="{% url 'auction_create' %}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="#detail-list">
+                <div class="row g-3">
+                  <div class="col-12">
+                    {% regroup services by get_category_display as categories %}
+                    <select class="form-select" id="id_chosen_service" name="chosen_service">
+                      <option selected>Выбрать услугу</option>
+                      {% for category in categories %}
+                        <optgroup label="{{ category.grouper }}">
+                          {% for service in category.list %}
+                            <option value="{{ service.id }}">{{ service }}</option>
+                          {% endfor %}
+                        </optgroup>
+                      {% endfor %}
+                    </select>
                   </div>
-                  <p class="timer" id="timer"></p>
-                </form>
-              </div>
+                  <div class="col-12">
+                    <button id="auction_create" class="btn btn-primary btn" type="submit">Искать исполнителя</button>
+                  </div>
+                </div>
+              </form>
             </div>
-            <div class="col-md-7">
-              <div class="card-body">
-                <h5 class="card-title">Заказ услуги</h5>
-                <p class="card-text">
-                  После выбора необходимой услуги из списка предложенных и нажатия кнопки поиска откроется часовой аукцион
-                  среди компаний, по истечение которого будет выбран исполнитель.
-                </p>
-              </div>
+          </div>
+          <div class="col-md-7">
+            <div class="card-body" id="detail-list" hx-get="{% url 'auction_list' %}" hx-trigger="load">
             </div>
           </div>
         </div>
       </div>
-      {% endif %}
     </div>
-    <div class="row mt-5">
-      <h2>Заказы в процессе выполнения</h2>
-      <div class="row row-cols-1 row-cols-md-2 g-2">
-        {% for order in orders_in_progress %}
-          <div class="col">
-            <div class="card bg-dark">
-              <div class="card-body">
-                <h5 class="card-title"><span class="badge bg-secondary">{{ order.auction.chosen_service.get_category_display }}</span> {{ order.auction.chosen_service.name }}</h5>
-                <h6 class="card-text">Выполняет компания <a href="">{{ order.company }}</a></h6>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">{{ order.auction.timer_end }}</small>
+    {% if orders_in_progress %}
+      <div class="row mt-5">
+        <h2>Заказы в процессе выполнения</h2>
+        <div class="row row-cols-1 row-cols-md-2 g-2">
+          {% for order in orders_in_progress %}
+            <div class="col">
+              <div class="card bg-dark">
+                <div class="card-body">
+                  <h5 class="card-title"><span class="badge bg-secondary">{{ order.auction.chosen_service.get_category_display }}</span> {{ order.auction.chosen_service.name }}</h5>
+                  <h6 class="card-text">Выполняет компания <a href="">{{ order.company }}</a></h6>
+                </div>
+                <div class="card-footer">
+                  <small class="text-muted">{{ order.auction.timer_end }}</small>
+                </div>
               </div>
             </div>
-          </div>
-        {% endfor %}
+          {% endfor %}
+        </div>
       </div>
-    </div>
-    <div class="row mt-5">
-      <h2>Выполненные заказы</h2>
-      <div class="row row-cols-1 row-cols-md-2 g-2">
-        {% for order in completed_orders %}
-          <div class="col">
-            <div class="card bg-dark">
-              <div class="card-body">
-                <h5 class="card-title"><span class="badge bg-secondary">{{ order.auction.chosen_service.get_category_display }}</span> {{ order.auction.chosen_service.name }}</h5>
-                <h6 class="card-text"><strong>Исполнитель:</strong> <a href="">{{ order.company }}</a></h6>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">Выполнено {{ order.auction.timer_end }}</small>
+    {% endif %}
+    {% if completed_orders %}
+      <div class="row mt-5">
+        <h2>Выполненные заказы</h2>
+        <div class="row row-cols-1 row-cols-md-2 g-2">
+          {% for order in completed_orders %}
+            <div class="col">
+              <div class="card bg-dark">
+                <div class="card-body">
+                  <h5 class="card-title"><span class="badge bg-secondary">{{ order.auction.chosen_service.get_category_display }}</span> {{ order.auction.chosen_service.name }}</h5>
+                  <h6 class="card-text"><strong>Исполнитель:</strong> <a href="">{{ order.company }}</a></h6>
+                </div>
+                <div class="card-footer">
+                  <small class="text-muted">Выполнено {{ order.auction.timer_end }}</small>
+                </div>
               </div>
             </div>
-          </div>
-        {% endfor %}
+          {% endfor %}
+        </div>
       </div>
-    </div>
+    {% endif %}
   </div>
 </div>
   
-<script>
-  function addHours(date, minutes) {
-      const newDate = new Date(date);
-      newDate.setMinutes(newDate.getMinutes() + minutes);
-      return newDate;
-  }
-
-  function countdownTimeStart() {
-      const date = new Date('{{ auction.timer_start.isoformat }}');
-      const newDate = addHours(date, 2);
-      var countDownDate = newDate.getTime();
-
-      var x = setInterval(function () {
-          var now = new Date().getTime();
-          var distance = countDownDate - now;
-          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          document.getElementById("button").innerHTML = "Идет поиск исполнителя...";
-          document.getElementById("timer").innerHTML = "Осталось: " + minutes + ":" + seconds;
-
-          if (distance < 0) {
-              clearInterval(x);
-              document.getElementById("button").innerHTML = "Исполнитель найден";
-              document.getElementById("timer").innerHTML = "";
-              location.reload();
-          }
-      }, 1000);
-  }
-</script>

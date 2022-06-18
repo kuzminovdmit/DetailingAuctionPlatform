@@ -1,0 +1,32 @@
+{% if auctions %}
+  <div class="list-group">
+    {% for auction in auctions %}
+      <div class="list-group-item bg-warning list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1"><span class="badge bg-danger">Аукцион</span> {{ auction.chosen_service }}</h5>
+        </div>
+        <small class="timer" id="{{ auction.id }}">{{ auction.timer_end|date:'Y-m-d H:i:s' }}</small>
+        <div id="timer{{ auction.id }}"></div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="card-text">Выберите услугу из списка предложенных, запустите аукцион и ждите, когда будет разыграно право
+  на выполнение вашего заказа.</p>
+{% endif %}
+
+<script>
+    document.querySelectorAll('.timer').forEach(function(timer) {
+        setInterval(() => {
+            let diff = Date.parse(timer.innerHTML) - Date.now();
+            const days = Math.floor(diff / 86400000);
+            diff -= days * 86400000;
+            const hours = Math.floor(diff / 3600000);
+            diff -= hours * 3600000;
+            const mins = Math.floor(diff / 60000);
+            diff -= mins * 60000;
+            const secs = Math.floor(diff / 1000);
+            document.querySelector("#timer" + timer.id).innerHTML = `${hours}:${mins}:${secs}`
+        }, 1000);
+    });
+</script>

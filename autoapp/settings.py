@@ -2,6 +2,7 @@ from pathlib import Path
 
 import environ
 
+
 env = environ.Env(
     DEBUG=(bool, False)
 )
@@ -76,8 +77,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'ru-ru'
+TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 USE_TZ = True
 
@@ -101,7 +102,7 @@ if DEBUG:
     ]
 else:
     ALLOWED_HOSTS = [
-        '*.pythonanywhere.com',
+        'autoapp.eu.pythonanywhere.com',
     ]
 
     SECURE_SSL_REDIRECT = True

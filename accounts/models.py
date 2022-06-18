@@ -55,7 +55,7 @@ class Service(models.Model):
 
 
 def get_default_timer_end():
-    return timezone.now() + timedelta(minutes=1)
+    return timezone.now() + timedelta(minutes=10)
 
 
 class Auction(models.Model):
