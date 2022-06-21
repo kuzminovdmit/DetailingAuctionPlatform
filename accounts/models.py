@@ -91,8 +91,8 @@ class Order(models.Model):
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     cost = models.PositiveSmallIntegerField(default=0)
-    date_started = models.DateTimeField(auto_now_add=True)
-    date_completed = models.DateTimeField(default=timezone.now)
+    datetime_start = models.DateTimeField(auto_now_add=True)
+    datetime_end = models.DateTimeField(blank=True, null=True)
     is_completed = models.BooleanField(default=False)
 
     def __str__(self):
