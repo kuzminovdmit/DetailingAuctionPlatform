@@ -5,8 +5,8 @@
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1"><span class="badge bg-danger">Аукцион</span> {{ auction.chosen_service }}</h5>
         </div>
-        <small class="timer" id="{{ auction.id }}">{{ auction.timer_end|date:'Y-m-d H:i:s' }}</small>
-        <div id="timer{{ auction.id }}"></div>
+        <small class="datetime-end">{{ auction.datetime_end|date:'Y-m-d H:i:s' }}</small>
+        <div class="timer"></div>
       </div>
     {% endfor %}
   </div>
@@ -16,9 +16,12 @@
 {% endif %}
 
 <script>
-    document.querySelectorAll('.timer').forEach(function(timer) {
+    document.querySelectorAll('.list-group-item').forEach(function(item) {
+        let timer = item.getElementsByClassName('timer')[0];
+        let datetimeEnd = Date.parse(item.getElementsByClassName('datetime-end')[0].innerHTML)
+        setTimeout(() => {item.remove()}, datetimeEnd - Date.now());
         setInterval(() => {
-            let diff = Date.parse(timer.innerHTML) - Date.now();
+            let diff = datetimeEnd - Date.now();
             const days = Math.floor(diff / 86400000);
             diff -= days * 86400000;
             const hours = Math.floor(diff / 3600000);
@@ -26,7 +29,8 @@
             const mins = Math.floor(diff / 60000);
             diff -= mins * 60000;
             const secs = Math.floor(diff / 1000);
-            document.querySelector("#timer" + timer.id).innerHTML = `${hours}:${mins}:${secs}`
+            console.log(diff)
+            timer.innerHTML = `${hours}:${mins}:${secs}`
         }, 1000);
     });
 </script>
