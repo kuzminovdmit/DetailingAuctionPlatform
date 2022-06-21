@@ -59,46 +59,8 @@
         </div>
       </div>
     </div>
-    {% if orders_in_progress %}
-      <div class="row mt-5">
-        <h2>Заказы в процессе выполнения</h2>
-        <div class="row row-cols-1 row-cols-md-2 g-2">
-          {% for order in orders_in_progress %}
-            <div class="col">
-              <div class="card bg-dark">
-                <div class="card-body">
-                  <h5 class="card-title"><span class="badge bg-secondary">{{ order.auction.chosen_service.get_category_display }}</span> {{ order.auction.chosen_service.name }}</h5>
-                  <h6 class="card-text">Выполняет компания <a href="">{{ order.company }}</a></h6>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">{{ order.auction.datetime_end }}</small>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-      </div>
-    {% endif %}
-    {% if completed_orders %}
-      <div class="row mt-5">
-        <h2>Выполненные заказы</h2>
-        <div class="row row-cols-1 row-cols-md-2 g-2">
-          {% for order in completed_orders %}
-            <div class="col">
-              <div class="card bg-dark">
-                <div class="card-body">
-                  <h5 class="card-title"><span class="badge bg-secondary">{{ order.auction.chosen_service.get_category_display }}</span> {{ order.auction.chosen_service.name }}</h5>
-                  <h6 class="card-text"><strong>Исполнитель:</strong> <a href="">{{ order.company }}</a></h6>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">Выполнено {{ order.auction.datetime_end }}</small>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-      </div>
-    {% endif %}
+    <div hx-get="{% url 'order_list' status='in-progress' %}" hx-trigger="load"></div>
+    <div hx-get="{% url 'order_list' status='completed' %}" hx-trigger="load"></div>
   </div>
 </div>
   

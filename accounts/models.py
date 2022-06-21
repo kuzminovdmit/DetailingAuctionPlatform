@@ -15,17 +15,6 @@ class Car(models.Model):
     def __str__(self) -> str:
         return f'Автомобиль №{self.id}'
 
-    def get_orders(self, is_completed=False):
-        auctions = self.auction_set.select_related(
-            'chosen_service').prefetch_related('order_set').all()
-        completed_orders = Order.objects.none()
-
-        for auction in auctions:
-            completed_orders = completed_orders.union(
-                auction.order_set.filter(is_completed=is_completed))
-
-        return completed_orders
-
 
 class Company(models.Model):
     CITY_CHOICES = (

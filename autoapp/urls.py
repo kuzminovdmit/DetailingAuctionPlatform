@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.views import LogoutView, PasswordChangeView, PasswordResetView
 from django.urls import path, include
 
-from accounts.views import DashboardView, AuctionCreateView, AuctionListView, SignInView, SignUpView
+from accounts.views import DashboardView, AuctionCreateView, AuctionListView, OrderListView, SignInView, SignUpView
 
 
 urlpatterns = [
@@ -21,6 +21,11 @@ urlpatterns = [
         route='auction_list',
         view=AuctionListView.as_view(),
         name='auction_list'
+    ),
+    path(
+        route='order_list/<str:status>',
+        view=OrderListView.as_view(),
+        name='order_list'
     ),
     path(
         route='sign-up',

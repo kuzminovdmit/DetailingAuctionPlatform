@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from django.views.generic import CreateView, ListView, TemplateView
 
 from .forms import CarCreationForm, AuctionCreationForm
-from .models import Car, Service, Auction
+from .models import Car, Service, Auction, Order
 
 
 class SignUpView(CreateView):
@@ -64,9 +64,32 @@ class AuctionListView(ListView):
     model = Auction
     context_object_name = 'auctions'
     template_name = 'auction_list.html'
+    queryset = Auction.objects.filter(is_company_chosen=False)
+
+
+class OrderListView(ListView):
+    model = Order
+    context_object_name = 'orders'
+    template_name = 'order_list.html'
 
     def get_queryset(self):
-        return super(AuctionListView, self).get_queryset().filter(car=self.request.user.car, is_company_chosen=False)
+        status = self.kwargs.get('status')
+        is_completed = False
+
+        if status == 'in_progress':
+            is_completed = False
+        elif status == 'completed':
+            is_completed = True
+
+        return super(OrderListView, self).get_queryset().filter(
+            auction__car=self.request.user.car,
+            is_completed=is_completed
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderListView, self).get_context_data()
+        context['is_completed'] = self.kwargs.get('is_completed', False)
+        return context
 
 
 class DashboardView(TemplateView):
@@ -83,10 +106,6 @@ class DashboardView(TemplateView):
         if user.is_authenticated:
             try:
                 context['car'] = user.car
-                context['orders_in_progress'] = user.car.get_orders(
-                    is_completed=False)
-                context['completed_orders'] = user.car.get_orders(
-                    is_completed=True)
             except Car.DoesNotExist:
                 context['car_form'] = CarCreationForm()
             context['services'] = Service.objects.all()
