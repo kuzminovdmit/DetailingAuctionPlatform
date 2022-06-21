@@ -19,8 +19,8 @@
     document.querySelectorAll('.list-group-item').forEach(function(item) {
         let timer = item.getElementsByClassName('timer')[0];
         let datetimeEnd = Date.parse(item.getElementsByClassName('datetime-end')[0].innerHTML)
-        setTimeout(() => {item.remove()}, datetimeEnd - Date.now());
-        setInterval(() => {
+
+        const timerInterval = setInterval(() => {
             let diff = datetimeEnd - Date.now();
             const days = Math.floor(diff / 86400000);
             diff -= days * 86400000;
@@ -29,8 +29,16 @@
             const mins = Math.floor(diff / 60000);
             diff -= mins * 60000;
             const secs = Math.floor(diff / 1000);
-            console.log(diff)
             timer.innerHTML = `${hours}:${mins}:${secs}`
         }, 1000);
+
+        setTimeout(() => {
+            clearInterval(timerInterval);
+            timer.innerHTML = 'Аукцион закончен. Страница обновится, когда будет оформлен заказ';
+        }, datetimeEnd - Date.now());
+
+        setTimeout(() => {
+            document.location.reload();
+        }, datetimeEnd - Date.now() + 60000);
     });
 </script>
