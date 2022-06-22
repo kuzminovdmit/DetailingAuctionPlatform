@@ -4,6 +4,8 @@ from django.db import models
 from django.utils import timezone
 from django_q.models import Schedule
 
+from companies.models import Company
+
 
 class Car(models.Model):
     client = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -14,22 +16,6 @@ class Car(models.Model):
     
     def __str__(self) -> str:
         return f'Автомобиль №{self.id}'
-
-
-class Company(models.Model):
-    CITY_CHOICES = (
-        ('MSK', 'Москва'),
-        ('SPB', 'Санкт-Петербург'),
-        ("YAR", "Ярославль"),
-    )
-    name = models.CharField(max_length=128)
-    city = models.CharField(max_length=3, choices=CITY_CHOICES, default='MSK')
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = 'companies'
 
 
 class Service(models.Model):

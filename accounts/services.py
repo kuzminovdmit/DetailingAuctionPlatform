@@ -1,4 +1,5 @@
-from .models import Auction, Company, Order
+from companies.models import Company
+from .models import Auction, Order
 
 
 def end_auction(auction_id):
