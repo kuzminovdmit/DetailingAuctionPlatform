@@ -1,39 +1,32 @@
-<div class="card bg-dark p-3 mb-3">
-  <div class="row g-0">
-    <div class="col-lg-6 col-md-12 col-sm-12">
-      <div class="card-body">
-        <div class="row row-cols-auto">
-          <img src="https://openclipart.org/image/800px/176709" style="filter: invert(100%);">
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="card bg-dark p-3 mb-3">
+    <div class="card-body">
+      <h1>Input your car details</h1>
+      <form method="post">
+        {% csrf_token %}
+        {{ car_form.errors }}
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="brand" id="id_brand" maxlength="128" required placeholder="brand">
+          <label for="brand">Brand</label>
         </div>
-      </div>
-    </div>
-    <div class="col-lg-6 col-md-12 col-sm-12">
-      <div class="card-body">
-        <h1>Введите данные автомобиля</h1>
-        <form method="post">
-          {% csrf_token %}
-          {{ car_form.errors }}
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="brand" id="id_brand" maxlength="128" required placeholder="brand">
-            <label for="brand">Марка</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="model" id="id_model" maxlength="128" required placeholder="model">
-            <label for="model">Модель</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="color" id="id_color" maxlength="128" required placeholder="color">
-            <label for="color">Цвет</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="release_year" id="id_release_year" maxlength="4" required placeholder="release_year">
-            <label for="release_year">Год выпуска</label>
-          </div>
-          <div class="mb-3 d-flex justify-content-center">
-            <button class="btn btn-primary" type="submit">Сохранить</button>
-          </div>
-        </form>
-      </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="model" id="id_model" maxlength="128" required placeholder="model">
+          <label for="model">Model</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="color" id="id_color" maxlength="128" required placeholder="color">
+          <label for="color">Color</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="release_year" id="id_release_year" maxlength="4" required placeholder="release_year">
+          <label for="release_year">Release Year</label>
+        </div>
+        <div class="mb-3 d-flex justify-content-center">
+          <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+      </form>
     </div>
   </div>
-</div>
+{% endblock %}

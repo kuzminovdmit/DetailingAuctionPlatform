@@ -1,12 +1,15 @@
 from django.contrib.auth.views import LogoutView, PasswordChangeView, PasswordResetView
 from django.urls import path
 
-from accounts.views import SignInView, SignUpView
+from .views import SignInView, SignUpView, CarDetailView, CarCreateView, CarListView
 
 
 app_name = 'accounts'
 
 urlpatterns = [
+    path('cars', CarListView.as_view(), name='car_list'),
+    path('cars/<int:pk>', CarDetailView.as_view(), name='car_detail'),
+    path('cars/create', CarCreateView.as_view(), name='car_create'),
     path('sign-up', SignUpView.as_view(), name='sign_up'),
     path('sign-in', SignInView.as_view(), name='sign_in'),
     path('change-password', PasswordChangeView.as_view(

@@ -2,10 +2,23 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, ListView, TemplateView, DetailView
 
 from .forms import CarCreationForm
 from .models import Car
+
+
+class DashboardView(TemplateView):
+    template_name = 'accounts/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DashboardView, self).get_context_data(**kwargs)
+
+        if not self.request.user.is_authenticated:
+            context['login_form'] = AuthenticationForm()
+            context['registration_form'] = UserCreationForm()
+
+        return context
 
 
 class SignUpView(CreateView):
@@ -39,37 +52,17 @@ class SignInView(LoginView):
 
 
 class CarCreateView(CreateView):
-    template_name = 'base.html'
+    model = Car
     form_class = CarCreationForm
+    template_name = 'accounts/car_create.html'
     success_url = 'dashboard'
-    
-    def get_context_data(self, **kwargs):
-        context = super(CarCreateView, self).get_context_data()
-        context.pop('form')
-        context['car_form'] = self.get_form()
-        return context
 
 
-class DashboardView(TemplateView):
-    template_name = 'base.html'
-    
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        return self.render_to_response(context)
-    
-    def get_context_data(self, **kwargs):
-        context = super(DashboardView, self).get_context_data(**kwargs)
-        user = self.request.user
-        
-        if user.is_authenticated:
-            try:
-                context['car'] = user.car
-            except Car.DoesNotExist:
-                context['car_form'] = CarCreationForm()
-            # context['services'] = Service.objects.all()
-            # context['auction_create_form'] = AuctionCreationForm()
-        else:
-            context['login_form'] = AuthenticationForm()
-            context['registration_form'] = UserCreationForm()
-        
-        return context
+class CarDetailView(DetailView):
+    model = Car
+    template_name = 'accounts/car_detail.html'
+
+
+class CarListView(ListView):
+    model = Car
+    template_name = 'accounts/car_list.html'
