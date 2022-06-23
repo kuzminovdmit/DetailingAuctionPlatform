@@ -4,8 +4,6 @@ from django.db import models
 from django.utils import timezone
 from django_q.models import Schedule
 
-from companies.models import Company
-
 
 class Car(models.Model):
     client = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -13,7 +11,7 @@ class Car(models.Model):
     color = models.CharField(max_length=128)
     release_year = models.CharField(max_length=4)
     model = models.CharField(max_length=128)
-    
+
     def __str__(self) -> str:
         return f'Автомобиль №{self.id}'
 
@@ -40,7 +38,7 @@ class Auction(models.Model):
     task_id = models.IntegerField(default=0)
     datetime_start = models.DateTimeField(auto_now_add=True)
     datetime_end = models.DateTimeField(default=get_default_timer_end)
-    is_company_chosen = models.BooleanField(default=False)
+    is_ended = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Аукцион №{self.id}'
@@ -49,25 +47,22 @@ class Auction(models.Model):
         if not self.pk:
             super(Auction, self).save(*args, **kwargs)
 
-        if not self.task_id:
-            task = Schedule.objects.create(
-                name=self.__str__(),
-                func='accounts.services.end_auction',
-                kwargs={'auction_id': self.pk},
-                schedule_type=Schedule.ONCE,
-                next_run=self.datetime_end
-            )
-            self.task_id = task.pk
+        # if not self.task_id:
+        #     task = Schedule.objects.create(
+        #         name=self.__str__(),
+        #         func='accounts.services.end_auction',
+        #         kwargs={'auction_id': self.pk},
+        #         schedule_type=Schedule.ONCE,
+        #         next_run=self.datetime_end
+        #     )
+        #     self.task_id = task.pk
 
         super(Auction, self).save(*args, **kwargs)
 
 
 class Order(models.Model):
-    auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    cost = models.PositiveSmallIntegerField(default=0)
+    offer = models.ForeignKey('companies.Offer', on_delete=models.CASCADE)
     datetime_start = models.DateTimeField(auto_now_add=True)
-    datetime_end = models.DateTimeField(blank=True, null=True)
     is_completed = models.BooleanField(default=False)
 
     def __str__(self):

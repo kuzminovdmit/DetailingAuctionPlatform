@@ -64,7 +64,7 @@ class AuctionListView(ListView):
     model = Auction
     context_object_name = 'auctions'
     template_name = 'auction_list.html'
-    queryset = Auction.objects.filter(is_company_chosen=False)
+    queryset = Auction.objects.filter(is_ended=False)
 
 
 class OrderListView(ListView):
