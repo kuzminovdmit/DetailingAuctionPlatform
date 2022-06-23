@@ -4,7 +4,6 @@ from django.contrib.auth.views import LogoutView, PasswordChangeView, PasswordRe
 from django.urls import path, include
 
 from accounts.views import DashboardView, SignInView, SignUpView
-from auctions.views import AuctionCreateView, AuctionListView, OrderListView
 
 
 urlpatterns = [
@@ -12,21 +11,6 @@ urlpatterns = [
         route='',
         view=DashboardView.as_view(),
         name='dashboard'
-    ),
-    path(
-        route='auction_create',
-        view=AuctionCreateView.as_view(),
-        name='auction_create'
-    ),
-    path(
-        route='auction_list',
-        view=AuctionListView.as_view(),
-        name='auction_list'
-    ),
-    path(
-        route='order_list/<str:status>',
-        view=OrderListView.as_view(),
-        name='order_list'
     ),
     path(
         route='sign-up',
