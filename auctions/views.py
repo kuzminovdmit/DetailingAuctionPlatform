@@ -5,7 +5,7 @@ from .models import Auction, Order
 
 
 class AuctionCreateView(CreateView):
-    template_name = 'car_service.html'
+    template_name = 'accounts/car_service.html'
     form_class = AuctionCreationForm
     success_url = 'auction_list'
 
@@ -17,7 +17,7 @@ class AuctionCreateView(CreateView):
 class AuctionListView(ListView):
     model = Auction
     context_object_name = 'auctions'
-    template_name = 'auction_list.html'
+    template_name = 'auctions/auction_list.html'
     queryset = Auction.objects.filter(is_ended=False)
 
 

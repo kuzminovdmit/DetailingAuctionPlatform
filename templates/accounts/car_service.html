@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% load static %}
 
 <div class="row">
@@ -30,7 +31,7 @@
         <div class="row g-0">
           <div class="col-md-5">
             <div class="card-body">
-              <form method="post" hx-post="{% url 'auction_create' %}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="#detail-list">
+              <form method="post" hx-post="{% url 'auctions:auction_create' %}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="#detail-list">
                 <div class="row g-3">
                   <div class="col-12">
                     {% regroup services by get_category_display as categories %}
@@ -53,14 +54,14 @@
             </div>
           </div>
           <div class="col-md-7">
-            <div class="card-body" id="detail-list" hx-get="{% url 'auction_list' %}" hx-trigger="load">
+            <div class="card-body" id="detail-list" hx-get="{% url 'auctions:auction_list' %}" hx-trigger="load">
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div hx-get="{% url 'order_list' status='in-progress' %}" hx-trigger="load"></div>
-    <div hx-get="{% url 'order_list' status='completed' %}" hx-trigger="load"></div>
+    <div hx-get="{% url 'auctions:order_list' status='in-progress' %}" hx-trigger="load"></div>
+    <div hx-get="{% url 'auctions:order_list' status='completed' %}" hx-trigger="load"></div>
   </div>
 </div>
   
