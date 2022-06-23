@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'django_q',
 
     'accounts',
-    'companies',
+    'auctions',
 ]
 
 DATABASES = {

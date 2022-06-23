@@ -3,7 +3,8 @@ from django.contrib import admin
 from django.contrib.auth.views import LogoutView, PasswordChangeView, PasswordResetView
 from django.urls import path, include
 
-from accounts.views import DashboardView, AuctionCreateView, AuctionListView, OrderListView, SignInView, SignUpView
+from accounts.views import DashboardView, SignInView, SignUpView
+from auctions.views import AuctionCreateView, AuctionListView, OrderListView
 
 
 urlpatterns = [

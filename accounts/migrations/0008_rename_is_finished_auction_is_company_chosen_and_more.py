@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='auction',
             name='timer_end',
-            field=models.DateTimeField(default=accounts.models.get_default_timer_end),
+            field=models.DateTimeField(),
         ),
         migrations.AddField(
             model_name='order',

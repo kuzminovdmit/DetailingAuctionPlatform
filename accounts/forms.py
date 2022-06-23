@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Car, Auction, Service
+from .models import Car
 
 
 class CarCreationForm(forms.ModelForm):
@@ -12,11 +12,3 @@ class CarCreationForm(forms.ModelForm):
     class Meta:
         model = Car
         fields = ['brand', 'color', 'release_year', 'model']
-
-
-class AuctionCreationForm(forms.ModelForm):
-    chosen_service = forms.ModelChoiceField(queryset=Service.objects.all())
-
-    class Meta:
-        model = Auction
-        fields = ['chosen_service']
