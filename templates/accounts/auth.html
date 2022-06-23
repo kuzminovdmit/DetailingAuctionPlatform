@@ -9,19 +9,6 @@
           We are the company, that helps people to make search of detailing service for your car easier.
           We bring together hundreds of widely known car's repair and maintenance companies.
         </p>
-        <p class="card-text"><small class="text-muted">Иван Михайлович <a href="mailto:alkorol98@mail.ru">alkorol98@mail.ru</a></small></p>
-        <div class="row row-cols-auto">
-          <div class="col mt-3">
-            <a href="https://play.google.com/store/">
-              <img class="img-fluid" src="{% static 'img/google-play.png' %}" style="height: 5rem;">
-            </a>
-          </div>
-          <div class="col mt-3">
-            <a href="https://apps.apple.com">
-              <img class="img-fluid" src="{% static 'img/app-store.png' %}" style="height: 5rem;">
-            </a>
-          </div>  
-        </div>
       </div>
     </div>
     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -30,64 +17,64 @@
           <div class="forms">
             <div class="form login px-1">
               <div class="btn-group btn-group-lg mb-3 d-flex" role="group">
-                <button type="button" class="btn btn-primary w-100">Вход</button>
-                <button type="button" class="btn btn-outline-primary w-100 signup-link">Регистрация</button>
+                <button type="button" class="btn btn-primary w-100">Sign In</button>
+                <button type="button" class="btn btn-outline-primary w-100 signup-link">Sign Up</button>
               </div>
-              <form class="form-signin" action="{% url 'sign_in' %}" method="post">
+              <form class="form-signin" action="{% url 'accounts:sign_in' %}" method="post">
                 {% csrf_token %}
                 {% if login_form.non_field_errors %}
                   <div class="alert alert-danger" role="alert">
-                    Неверно введены логин или пароль!
+                    Wrong username and (or) password!
                   </div>
                 {% endif %}
                 <div class="form-floating">
                   <input type="text" class="form-control {% if login_form.non_field_errors %}is-invalid{% endif %}" name="username" autofocus required id="id_username" placeholder="username">
-                  <label for="id_username">Логин</label>
+                  <label for="id_username">Username</label>
                 </div>
                 <div class="form-floating">
                   <input type="password" class="form-control {% if login_form.non_field_errors %}is-invalid{% endif %}" name="password" required id="id_password" placeholder="password">
-                  <label for="id_for_password">Пароль</label>
+                  <label for="id_for_password">Password</label>
                 </div>
                 <div class="mb-3 row">
                   <div class="col">
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                      <label class="form-check-label" for="flexCheckDefault">Запомнить меня</label>
+                      <label class="form-check-label" for="flexCheckDefault">Remember me</label>
                     </div>
                   </div>
                   <div class="col text-end">
-                    <a href="#">Забыли пароль?</a>
+                    <a href="#">Forgot password?</a>
                   </div>
                 </div>
                 <div class="mb-3 d-flex justify-content-center">
-                  <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
+                  <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
                 </div>
               </form>
             </div>
             <div class="form signup px-1">
               <div class="btn-group btn-group-lg mb-3 d-flex" role="group">
-                <button type="button" class="btn btn-outline-primary w-100 login-link">Вход</button>
-                <button type="button" class="btn btn-primary w-100">Регистрация</button>
+                <button type="button" class="btn btn-outline-primary w-100 login-link">Sign In</button>
+                <button type="button" class="btn btn-primary w-100">Sign Up</button>
               </div>
-              <form id="sign_up" class="form-signin" action="{% url 'sign_up' %}" method="post">
+              <form id="sign_up" class="form-signin" action="{% url 'accounts:sign_up' %}" method="post">
                 {% csrf_token %}
                 <div class="form-floating">     
                   <input type="text" class="form-control" name="username" id="id_username" autofocus required placeholder="username">
-                  <label for="id_username">Логин</label>
+                  <label for="id_username">Username</label>
                   <div class="invalid-tooltip invisible"></div>
                 </div>
                 <div class="form-floating">
                   <input type="password" class="form-control" name="password1" id="id_for_password1" required placeholder="password">
-                  <label for="id_for_password1">Пароль</label>
+                  <label for="id_for_password1">Password</label>
                   <div id="id_for_password1_tooltip" class="invalid-tooltip invisible"></div>
                 </div>
                 <div class="form-floating">
                   <input type="password" class="form-control" name="password2" id="id_for_password2" required placeholder="password">
-                  <label for="id_for_password2">Пароль (повторно)</label>
+                  <label for="id_for_password2">Password (again)</label>
                   <div id="id_for_password2_tooltip" class="invalid-tooltip invisible"></div>
                 </div>
                 <div class="mb-3 d-flex justify-content-center">
-                  <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button>
+                  <button class="w-100 btn btn-lg btn-primary" type="submit">Sign Up</button>
                 </div>
               </form>
             </div>
@@ -125,14 +112,14 @@
           error.preventDefault();
           firstPassword.classList.add("is-invalid");
           firstPasswordTooltip.classList.remove('invisible');
-          firstPasswordTooltip.innerText = 'Длина пароля должна быть 8-20 символов!';
+          firstPasswordTooltip.innerText = 'Password length must be 8-20 symbols!';
       };
 
       if (firstPassword.value !== secondPassword.value) {
           error.preventDefault();
           secondPassword.classList.add("is-invalid");
           secondPasswordTooltip.classList.remove('invisible');
-          secondPasswordTooltip.innerText = 'Пароли не совпадают!';
+          secondPasswordTooltip.innerText = 'Passwords does not match!';
       };
   });
   
