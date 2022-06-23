@@ -3,7 +3,7 @@
     {% for auction in auctions %}
       <div class="list-group-item bg-warning list-group-item-action">
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1"><span class="badge bg-danger">Аукцион</span> {{ auction.chosen_service }}</h5>
+          <h5 class="mb-1"><span class="badge bg-danger">Auction</span> {{ auction.chosen_service }}</h5>
         </div>
         <small class="datetime-end">{{ auction.datetime_end|date:'Y-m-d H:i:s' }}</small>
         <div class="timer"></div>
@@ -11,8 +11,7 @@
     {% endfor %}
   </div>
 {% else %}
-  <p class="card-text">Выберите услугу из списка предложенных, запустите аукцион и ждите, когда будет разыграно право
-  на выполнение вашего заказа.</p>
+  <p class="card-text">Choose a service from list, then start an auction and wait until the right to do your offer is drawn.</p>
 {% endif %}
 
 <script>
@@ -34,7 +33,7 @@
 
         setTimeout(() => {
             clearInterval(timerInterval);
-            timer.innerHTML = 'Аукцион закончен. Страница обновится, когда будет оформлен заказ';
+            timer.innerHTML = 'Auction is ended! The page will be reloaded when the order checked out';
         }, datetimeEnd - Date.now());
 
         setTimeout(() => {

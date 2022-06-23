@@ -13,19 +13,19 @@ class Car(models.Model):
     model = models.CharField(max_length=128)
 
     def __str__(self) -> str:
-        return f'Автомобиль №{self.id}'
+        return f'Car №{self.pk}'
 
 
 class Service(models.Model):
     CATEGORY_CHOICES = (
-        (1, "Ремонт"),
-        (2, "Обслуживание"),
+        (1, "Repair"),
+        (2, "Maintenance"),
     )
     name = models.CharField(max_length=128)
     category = models.PositiveSmallIntegerField(choices=CATEGORY_CHOICES)
 
     def __str__(self):
-        return self.name
+        return f'Service №{self.pk}'
 
 
 def get_default_timer_end():
@@ -41,7 +41,7 @@ class Auction(models.Model):
     is_ended = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'Аукцион №{self.id}'
+        return f'Auction №{self.pk}'
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -66,4 +66,4 @@ class Order(models.Model):
     is_completed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'Заказ №{self.id}'
+        return f'Order №{self.pk}'

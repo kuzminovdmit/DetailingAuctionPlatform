@@ -5,19 +5,19 @@
     <div class="row row-cols-1 g-2">
       <div class="col">
         <div class="card bg-dark">
-          <img src="https://автовыхлоп911.рф/wp-content/uploads/2018-lada-kalina-cross-2.jpg" class="card-img-top">
           <div class="card-body">
             <dl class="row lead">
-              <dt class="col-sm-6">Марка</dt>
-              <dd class="col-sm-6">{{ car.brand }}</dd>
-              <dt class="col-sm-6">Модель</dt>
-              <dd class="col-sm-6">{{ car.model }}</dd>
-              <dt class="col-sm-6">Год выпуска</dt>
-              <dd class="col-sm-6">{{ car.release_year }}</dd>
-              <dt class="col-sm-6">Цвет</dt>
-              <dd class="col-sm-6">{{ car.color }}</dd>
+              <dt class="col-sm-5">Brand</dt>
+              <dd class="col-sm-7">{{ car.brand }}</dd>
+              <dt class="col-sm-5">Model</dt>
+              <dd class="col-sm-7">{{ car.model }}</dd>
+              <dt class="col-sm-5">Release year</dt>
+              <dd class="col-sm-7">{{ car.release_year }}</dd>
+              <dt class="col-sm-5">Color</dt>
+              <dd class="col-sm-7">{{ car.color }}</dd>
             </dl>
-            <a href="#" class="btn btn-primary">Редактировать данные</a>
+            <a href="#" class="btn btn-primary">Edit</a>
+            <a href="#" class="btn btn-danger">Delete</a>
           </div>
         </div>
       </div>
@@ -26,7 +26,7 @@
   <div class="col-lg-8 col-md-7 col-sm-6">
     <div class="row">
       <div class="card bg-dark">
-        <h2 class="card-title ms-3 mt-4">Заказ услуги</h2>
+        <h2 class="card-title ms-3 mt-4">Order a service</h2>
         <div class="row g-0">
           <div class="col-md-5">
             <div class="card-body">
@@ -35,18 +35,18 @@
                   <div class="col-12">
                     {% regroup services by get_category_display as categories %}
                     <select class="form-select" id="id_chosen_service" name="chosen_service">
-                      <option selected>Выбрать услугу</option>
+                      <option selected>Choose a service</option>
                       {% for category in categories %}
                         <optgroup label="{{ category.grouper }}">
                           {% for service in category.list %}
-                            <option value="{{ service.id }}">{{ service }}</option>
+                            <option value="{{ service.id }}">{{ service.name }}</option>
                           {% endfor %}
                         </optgroup>
                       {% endfor %}
                     </select>
                   </div>
                   <div class="col-12">
-                    <button id="auction_create" class="btn btn-primary btn" type="submit">Искать исполнителя</button>
+                    <button id="auction_create" class="btn btn-primary btn" type="submit">Start auction</button>
                   </div>
                 </div>
               </form>
