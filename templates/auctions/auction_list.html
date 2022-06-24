@@ -10,10 +10,7 @@
       </div>
     {% endfor %}
   </div>
-{% else %}
-  <p class="card-text">Choose a service from list, then start an auction and wait until the right to do your offer is drawn.</p>
 {% endif %}
-
 <script>
     document.querySelectorAll('.list-group-item').forEach(function(item) {
         let timer = item.getElementsByClassName('timer')[0];

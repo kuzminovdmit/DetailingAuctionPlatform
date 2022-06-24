@@ -1,24 +1,29 @@
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, TemplateView
 
 from .forms import AuctionCreationForm
 from .models import Auction, Order
 
 
-class AuctionCreateView(CreateView):
-    template_name = 'accounts/car_service.html'
-    form_class = AuctionCreationForm
-    success_url = 'auction_list'
+class AuctionCRUDView(TemplateView):
+    template_name = 'auctions/auctions.html'
 
-    def form_valid(self, form):
-        form.instance.car = self.request.user.car
-        return super(AuctionCreateView, self).form_valid(form)
+
+class AuctionCreateView(CreateView):
+    model = Auction
+    form_class = AuctionCreationForm
+    template_name = 'auctions/auction_create.html'
+
+    def get_form_kwargs(self):
+        kwargs = super(AuctionCreateView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
 
 
 class AuctionListView(ListView):
     model = Auction
     context_object_name = 'auctions'
-    template_name = 'auctions/auction_list.html'
-    queryset = Auction.objects.filter(is_ended=False)
+    template_name = 'auctions/auction_list.html.html'
+    queryset = Auction.objects.filter(is_ended=True)
 
 
 class OrderListView(ListView):
@@ -40,7 +45,3 @@ class OrderListView(ListView):
             is_completed=is_completed
         )
 
-    def get_context_data(self, **kwargs):
-        context = super(OrderListView, self).get_context_data()
-        context['is_completed'] = self.kwargs.get('is_completed', False)
-        return context
