@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.db import models
 
 from accounts.models import Car, Company
@@ -16,15 +17,28 @@ class Service(models.Model):
 
 
 class Auction(models.Model):
+    FAST = 10
+    NORMAL = 60
+    SLOW = 1440
+    DURATION_CHOICES = (
+        (FAST, '10 minutes'),
+        (NORMAL, '1 hour'),
+        (SLOW, '1 day'),
+    )
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     start_cost = models.PositiveSmallIntegerField()
     datetime_start = models.DateTimeField(auto_now_add=True)
-    datetime_end = models.DateTimeField()
+    duration_choice = models.PositiveSmallIntegerField(choices=DURATION_CHOICES, default=FAST)
+    datetime_end = models.DateTimeField(blank=True, null=True)
     is_ended = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Auction №{self.pk}'
+    
+    def save(self, *args, **kwargs):
+        self.datetime_end = self.datetime_start + timedelta(minutes=self.duration_choice)
+        super(Auction, self).save(*args, **kwargs)
 
 
 class Offer(models.Model):
