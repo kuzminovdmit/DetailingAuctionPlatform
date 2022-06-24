@@ -1,0 +1,42 @@
+<form method="post" hx-post="{% url 'auctions:auction_create' %}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="#detail-list">
+  <div class="row g-3">
+    <div class="col-3">
+      <select class="form-select" id="id_car" name="car">
+        <option selected>Choose a car</option>
+        {% for car in form.car.field.queryset %}
+          <option value="{{ car.id }}">{{ car }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-3">
+      {% regroup form.service.field.queryset by get_category_display as categories %}
+      <select class="form-select" id="id_service" name="service">
+        <option selected>Choose a service</option>
+        {% for category in categories %}
+          <optgroup label="{{ category.grouper }}">
+            {% for service in category.list %}
+              <option value="{{ service.id }}">{{ service.name }}</option>
+            {% endfor %}
+          </optgroup>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-3">
+      <select class="form-select" id="id_duration_choice" name="duration_choice">
+        <option selected>Choose a duration</option>
+        {% for duration in form.fields.duration_choice.choices %}
+          <option value="{{ duration.0 }}">{{ duration.1 }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-3">
+      <div class="input-group">
+        <span class="input-group-text">$</span>
+        <input class="form-control" type="number" name="start_cost" placeholder="Enter starting price" required id="id_start_cost">
+      </div>
+    </div>
+    <div class="col-12">
+      <button id="auction_create" class="btn btn-primary btn" type="submit">Start auction</button>
+    </div>
+  </div>
+</form>

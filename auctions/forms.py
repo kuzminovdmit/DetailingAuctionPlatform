@@ -1,13 +1,18 @@
 from django import forms
 
+from accounts.models import Car
+
 from .models import Auction, Service
 
 
 class AuctionCreationForm(forms.ModelForm):
-    chosen_service = forms.ModelChoiceField(queryset=Service.objects.all())
-    start_cost = forms.IntegerField()
+    service = forms.ModelChoiceField(queryset=Service.objects.all())
     duration_choice = forms.ChoiceField(choices=Auction.DURATION_CHOICES)
 
     class Meta:
         model = Auction
-        fields = ['chosen_service', 'start_cost', 'duration_choice']
+        fields = ['car', 'service', 'start_cost', 'duration_choice']
+
+    def __init__(self, user, *args, **kwargs):
+        super(AuctionCreationForm, self).__init__(*args, **kwargs)
+        self.fields['car'] = forms.ModelChoiceField(queryset=Car.objects.filter(client=user))

@@ -37,7 +37,12 @@ class Auction(models.Model):
         return f'Auction №{self.pk}'
     
     def save(self, *args, **kwargs):
-        self.datetime_end = self.datetime_start + timedelta(minutes=self.duration_choice)
+        if not self.pk:
+            super(Auction, self).save(*args, **kwargs)
+
+        if not self.datetime_end:
+            self.datetime_end = self.datetime_start + timedelta(minutes=self.duration_choice)
+
         super(Auction, self).save(*args, **kwargs)
 
 
