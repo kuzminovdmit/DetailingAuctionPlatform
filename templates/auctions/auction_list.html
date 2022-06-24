@@ -1,18 +1,23 @@
-{% if auctions %}
-  <div class="list-group">
-    {% for auction in auctions %}
-      <div class="list-group-item bg-warning list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1"><span class="badge bg-danger">Auction</span> {{ auction.chosen_service }}</h5>
+<div class="row g-3 mt-3">
+  {% for auction in auctions %}
+    <div class="col-sm-6">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-info">Auction</span> {{ auction.service }}</h5>
+          <p class="card-text">
+            <small class="datetime-end">{{ auction.datetime_end|date:'Y-m-d H:i:s' }}</small>
+          </p>
+          <div class="timer"></div>
+          <a href="" class="btn btn-primary">Edit</a>
+          <a href="" class="btn btn-danger">Delete</a>
         </div>
-        <small class="datetime-end">{{ auction.datetime_end|date:'Y-m-d H:i:s' }}</small>
-        <div class="timer"></div>
       </div>
-    {% endfor %}
-  </div>
-{% endif %}
+    </div>
+  {% endfor %}
+</div>
+
 <script>
-    document.querySelectorAll('.list-group-item').forEach(function(item) {
+    document.querySelectorAll('.col-sm-6').forEach(function(item) {
         let timer = item.getElementsByClassName('timer')[0];
         let datetimeEnd = Date.parse(item.getElementsByClassName('datetime-end')[0].innerHTML)
 
@@ -30,11 +35,7 @@
 
         setTimeout(() => {
             clearInterval(timerInterval);
-            timer.innerHTML = 'Auction is ended! The page will be reloaded when the order checked out';
+            item.remove()
         }, datetimeEnd - Date.now());
-
-        setTimeout(() => {
-            document.location.reload();
-        }, datetimeEnd - Date.now() + 60000);
     });
 </script>
