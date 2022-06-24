@@ -2,7 +2,7 @@ from django.urls import path
 
 from accounts.views import DashboardView
 
-from .views import AuctionCRUDView, AuctionCreateView, AuctionListView, OrderListView
+from .views import AuctionCRUDView, AuctionCreateView, AuctionListView
 
 
 app_name = 'auctions'

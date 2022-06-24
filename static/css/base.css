@@ -13,53 +13,53 @@
     --bs-border-radius-xl: 1rem;
     --bs-border-radius-2xl: 2rem;
     --bs-border-radius-pill: 50rem;
-    --bs-heading-color: ;
+    --bs-heading-color: #fff;
     --bs-link-color: #0d6efd;
     --bs-link-hover-color: #0a58ca;
     --bs-code-color: #d63384;
     --bs-highlight-bg: #fff3cd;
-  }
+}
 
-  /* LOGIN & REGISTRATION FORM */
+/* LOGIN & REGISTRATION FORM */
 
-  .enter {
+.enter {
     position: relative;
     width: 100%;
     overflow: hidden;
-  }
+}
 
-  .enter .forms {
+.enter .forms {
     display: flex;
     width: 200%;
     transition: height 0.2s ease;
-  }
+}
 
-  .enter .form {
+.enter .form {
     width: 50%;
     transition: margin-left 0.18s ease;
-  }
+}
 
-  .enter.active .login {
+.enter.active .login {
     margin-left: -50%;
     opacity: 0;
     transition: margin-left 0.18s ease, opacity 0.15s ease;
-  }
+}
 
-  .enter .signup {
+.enter .signup {
     opacity: 0;
     transition: opacity 0.09s ease;
-  }
+}
 
-  .enter.active .signup {
+.enter.active .signup {
     opacity: 1;
     transition: opacity 0.2s ease;
-  }
+}
 
-  .enter .form .title {
+.enter .form .title {
     position: relative;
-  }
+}
 
-  .form .title::before {
+.form .title::before {
     content: '';
     position: absolute;
     left: 0;
@@ -68,29 +68,29 @@
     width: 30px;
     background-color: #4070f4;
     border-radius: 25px;
-  }
+}
 
-  .form-floating label {
-      color: #000;
-  }
-  
-  .form-signin .form-floating:focus-within {
+.form-floating label {
+    color: #000;
+}
+
+.form-signin .form-floating:focus-within {
     z-index: 2;
-  }
-  
-  .form-signin input[name="username"], input[name="old_password"] {
+}
+
+.form-signin input[name="username"], input[name="old_password"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-  }
+}
 
-  .form-signin input[name="password1"], input[name="new_password1"] {
+.form-signin input[name="password1"], input[name="new_password1"] {
     margin-bottom: -1px;
     border-radius: 0;
-  }
+}
 
-  .form-signin input[name="password"], input[name="password2"], input[name="new_password2"] {
+.form-signin input[name="password"], input[name="password2"], input[name="new_password2"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-  }
+}
