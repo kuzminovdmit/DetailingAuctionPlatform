@@ -1,9 +1,28 @@
-from django.contrib.auth.models import User
+from django.conf import settings
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+from .managers import UserManager
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(_('email address'), unique=True)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = UserManager()
+
+    def __str__(self):
+        return self.email
 
 
 class Car(models.Model):
-    client = models.OneToOneField(User, on_delete=models.CASCADE)
+    client = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     brand = models.CharField(max_length=128)
     color = models.CharField(max_length=128)
     release_year = models.CharField(max_length=4)
@@ -24,7 +43,7 @@ class Company(models.Model):
 
 
 class Representative(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
 
     class Meta:

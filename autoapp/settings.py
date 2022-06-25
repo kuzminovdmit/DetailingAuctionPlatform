@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     'auctions',
 ]
 
+AUTH_USER_MODEL = 'accounts.User'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
