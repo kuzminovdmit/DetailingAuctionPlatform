@@ -4,7 +4,7 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('', include('auctions.urls', namespace='auctions')),
+    path('auctions/', include('auctions.urls', namespace='auctions')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
 ]
 

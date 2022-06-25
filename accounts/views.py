@@ -1,13 +1,9 @@
 from django.contrib.auth.views import LoginView
-from django.views.generic import CreateView, ListView, TemplateView, DetailView
+from django.views.generic import CreateView, ListView, DetailView
 from django.urls import reverse_lazy
 
 from .forms import SignUpForm, CarCreationForm
 from .models import Car
-
-
-class DashboardView(TemplateView):
-    template_name = 'accounts/dashboard.html'
 
 
 class SignUpView(CreateView):
