@@ -7,9 +7,6 @@ from .views import SignInView, SignUpView, CarDetailView, CarCreateView, CarList
 app_name = 'accounts'
 
 urlpatterns = [
-    path('cars', CarListView.as_view(), name='car_list'),
-    path('cars/<int:pk>', CarDetailView.as_view(), name='car_detail'),
-    path('cars/create', CarCreateView.as_view(), name='car_create'),
     path('sign-up', SignUpView.as_view(), name='sign_up'),
     path('sign-in', SignInView.as_view(), name='sign_in'),
     path('change-password', PasswordChangeView.as_view(
@@ -23,4 +20,8 @@ urlpatterns = [
         extra_context={'password_reset': True}
     ), name='password_reset'),
     path('logout', LogoutView.as_view(next_page='/'), name='logout'),
+
+    path('cars', CarListView.as_view(), name='car_list'),
+    path('cars/<int:pk>', CarDetailView.as_view(), name='car_detail'),
+    path('cars/create', CarCreateView.as_view(), name='car_create'),
 ]

@@ -1,54 +1,33 @@
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect
 from django.views.generic import CreateView, ListView, TemplateView, DetailView
+from django.urls import reverse_lazy
 
-from .forms import CarCreationForm
+from .forms import SignUpForm, CarCreationForm
 from .models import Car
 
 
 class DashboardView(TemplateView):
     template_name = 'accounts/dashboard.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(DashboardView, self).get_context_data(**kwargs)
-
-        if not self.request.user.is_authenticated:
-            context['login_form'] = AuthenticationForm()
-            context['registration_form'] = UserCreationForm()
-
-        return context
-
 
 class SignUpView(CreateView):
-    template_name = 'base.html'
-    form_class = UserCreationForm
-    
-    def get_context_data(self, **kwargs):
-        context = super(SignUpView, self).get_context_data(**kwargs)
-        context.pop('form')
-        context['registration_form'] = self.get_form()
-        return context
-
-    def form_valid(self, form):
-        form.save()
-        login(self.request, authenticate(
-            username=form.cleaned_data['username'],
-            password=form.cleaned_data['password1']
-        ))
-        return redirect('dashboard')
+    template_name = 'accounts/sign_up.html'
+    form_class = SignUpForm
+    success_url = reverse_lazy('accounts:sign_in')
   
 
 class SignInView(LoginView):
-    template_name = 'base.html'
+    template_name = 'accounts/sign_in.html'
     next_page = '/'
-    
-    def get_context_data(self, **kwargs):
-        context = super(SignInView, self).get_context_data(**kwargs)
-        context.pop('form')
-        context['login_form'] = self.get_form()
-        return context
+
+    def form_valid(self, form):
+        remember_me = form.cleaned_data.get('remember_me')
+
+        if not remember_me:
+            self.request.session.set_expiry(0)
+            self.request.session.modified = True
+
+        return super(SignInView, self).form_valid(form)
 
 
 class CarCreateView(CreateView):

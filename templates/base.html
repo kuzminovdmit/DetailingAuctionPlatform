@@ -26,12 +26,21 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'accounts:password_change' %}">Change password</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'accounts:logout' %}">Log Out</a>
-          </li>
+          {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:password_change' %}">Change password</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:logout' %}">Log Out</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:sign_in' %}">Sign In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:sign_up' %}">Sign Up</a>
+            </li>
+          {% endif %}
         </ul>
       </div>
     </div>

@@ -22,54 +22,6 @@
 
 /* LOGIN & REGISTRATION FORM */
 
-.enter {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-}
-
-.enter .forms {
-    display: flex;
-    width: 200%;
-    transition: height 0.2s ease;
-}
-
-.enter .form {
-    width: 50%;
-    transition: margin-left 0.18s ease;
-}
-
-.enter.active .login {
-    margin-left: -50%;
-    opacity: 0;
-    transition: margin-left 0.18s ease, opacity 0.15s ease;
-}
-
-.enter .signup {
-    opacity: 0;
-    transition: opacity 0.09s ease;
-}
-
-.enter.active .signup {
-    opacity: 1;
-    transition: opacity 0.2s ease;
-}
-
-.enter .form .title {
-    position: relative;
-}
-
-.form .title::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 3px;
-    width: 30px;
-    background-color: #4070f4;
-    border-radius: 25px;
-}
-
 .form-floating label {
     color: #000;
 }
@@ -78,7 +30,7 @@
     z-index: 2;
 }
 
-.form-signin input[name="username"], input[name="old_password"] {
+.form-signin input[name="email"], input[name="username"], input[name="old_password"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
