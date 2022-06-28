@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="row mb-5">
+    <h1>Choose the type of your account</h1>
+  </div>
+
+  <div class="row g-3 mb-5">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-black">Client account</h5>
+          <p class="card-text text-black">Add your car to get the opportunity to create auction on performing service to your car.</p>
+          <a href="{% url 'accounts:car_create' %}" class="btn btn-primary">Add car</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-black">Representative account</h5>
+          <p class="card-text text-black">Add your company to have ability to take a part in auctions and perform services.</p>
+          <a href="{% url 'accounts:company_create' %}" class="btn btn-primary">Add company</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

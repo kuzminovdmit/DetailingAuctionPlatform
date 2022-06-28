@@ -32,6 +32,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         full_name = "%s %s" % (self.first_name, self.last_name)
         return full_name.strip()
 
+    @property
+    def is_client(self):
+        return hasattr(self, 'client')
+
+    @property
+    def is_representative(self):
+        return hasattr(self, 'representative')
+
 
 class Company(models.Model):
     name = models.CharField(max_length=128)

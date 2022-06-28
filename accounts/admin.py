@@ -1,12 +1,17 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import User, Car
+from .models import User, Client, Representative, Car, Company
 
 
 class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password', 'last_login')}),
+        ('Personal information', {'fields': (
+            'first_name',
+            'last_name',
+            'phone_number',
+        )}),
         ('Permissions', {'fields': (
             'is_active',
             'is_staff',
@@ -33,4 +38,7 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
+admin.site.register(Client)
+admin.site.register(Representative)
 admin.site.register(Car)
+admin.site.register(Company)

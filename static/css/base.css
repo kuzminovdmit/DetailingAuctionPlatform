@@ -20,28 +20,34 @@
     --bs-highlight-bg: #fff3cd;
 }
 
+.list-group {
+    --bs-list-group-color: #fff;
+    --bs-list-group-bg: #212529;
+    --bs-list-group-border-color: #404850;
+}
+
 /* LOGIN & REGISTRATION FORM */
 
 .form-floating label {
     color: #000;
 }
 
-.form-signin .form-floating:focus-within {
+.form-floating:focus-within {
     z-index: 2;
 }
 
-.form-signin input[name="email"], input[name="username"], input[name="old_password"] {
+input.company-name, input.signin-email, input.signup-email, input.pwd-change-old, input.car-brand {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
 
-.form-signin input[name="password1"], input[name="new_password1"] {
+input.signup-firstname, input.signup-lastname, input.signup-password1, input.pwd-change-new1, input.car-color, input.car-model {
     margin-bottom: -1px;
     border-radius: 0;
 }
 
-.form-signin input[name="password"], input[name="password2"], input[name="new_password2"] {
+input.company-email, input.signin-password, input.signup-password2, input.pwd-change-new2, input.car-year {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;

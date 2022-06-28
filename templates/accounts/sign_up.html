@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
 {% block content %}
   <div class="mx-auto col-lg-8 card bg-dark">
     <div class="row">
@@ -22,17 +21,27 @@
                 </div>
               {% endif %}
               <div class="form-floating">
-                <input type="email" class="form-control" name="email" id="id_email" required placeholder="email">
+                <input type="email" class="form-control signup-email" name="email" id="id_email" required placeholder="email">
                 <label for="id_email">Email</label>
                 <div id="id_for_email_tooltip" class="invalid-tooltip invisible"></div>
               </div>
               <div class="form-floating">
-                <input type="password" class="form-control" name="password1" id="id_for_password1" required placeholder="password">
+                <input type="text" class="form-control signup-firstname" name="first_name" id="id_first_name" maxlength="150" required placeholder="first_name">
+                <label for="id_first_name">First name</label>
+                <div id="id_first_name_tooltip" class="invalid-tooltip invisible"></div>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control signup-lastname" name="last_name" id="id_last_name" required maxlength="150" placeholder="last_name">
+                <label for="id_last_name">Last name</label>
+                <div id="id_last_name_tooltip" class="invalid-tooltip invisible"></div>
+              </div>
+              <div class="form-floating">
+                <input type="password" class="form-control signup-password1" name="password1" id="id_for_password1" required placeholder="password">
                 <label for="id_for_password1">Password</label>
                 <div id="id_for_password1_tooltip" class="invalid-tooltip invisible"></div>
               </div>
               <div class="form-floating">
-                <input type="password" class="form-control" name="password2" id="id_for_password2" required placeholder="password">
+                <input type="password" class="form-control signup-password2" name="password2" id="id_for_password2" required placeholder="password">
                 <label for="id_for_password2">Password (again)</label>
                 <div id="id_for_password2_tooltip" class="invalid-tooltip invisible"></div>
               </div>

@@ -1,15 +1,14 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import User, Car
+from auctions.models import Service
+from .models import User, Car, Company
 
 
 class SignUpForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-
     class Meta:
         model = User
-        fields = ['email', 'password1', 'password2']
+        fields = ['email', 'first_name', 'last_name', 'password1', 'password2']
 
     def save(self, commit=True):
         user = super(SignUpForm, self).save(commit=False)
@@ -30,3 +29,16 @@ class CarCreationForm(forms.ModelForm):
     class Meta:
         model = Car
         fields = ['brand', 'color', 'release_year', 'model']
+
+
+class CompanyCreationForm(forms.ModelForm):
+    name = forms.CharField(max_length=128)
+    services = forms.ModelMultipleChoiceField(
+        queryset=Service.objects.all(),
+        widget=forms.CheckboxSelectMultiple
+    )
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = Company
+        fields = ['name', 'services', 'email']

@@ -28,6 +28,7 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'accounts.User'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
+LOGIN_URL = 'accounts/sign-in'
 
 DATABASES = {
     'default': {
