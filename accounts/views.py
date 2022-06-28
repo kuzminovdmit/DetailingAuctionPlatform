@@ -4,7 +4,7 @@ from django.views.generic import CreateView, ListView, DetailView
 from django.urls import reverse_lazy
 
 from .forms import SignUpForm, CarCreationForm, CompanyCreationForm
-from .models import Car, Company
+from .models import Car, Company, Representative
 
 
 class SignUpView(CreateView):
@@ -60,4 +60,10 @@ class CompanyCreateView(CreateView):
     model = Company
     form_class = CompanyCreationForm
     template_name = 'accounts/company_create.html'
-    success_url = 'dashboard'
+
+    def get_success_url(self):
+        Representative.objects.create(
+            user=self.request.user,
+            company=self.object
+        )
+        return reverse_lazy('dashboard:main')

@@ -12,6 +12,7 @@
       </div>
       <div class="col-lg-6 col-md-7 col-sm-12">
         <div class="card-body">
+          {{ form.errors }}
           <div class="form px-1">
             <form id="sign_in" class="form-company-create" action="{% url 'accounts:company_create' %}" method="post">
               {% csrf_token %}
@@ -30,8 +31,8 @@
                   <h6 class="mt-2">{{ category.grouper }}</h6>
                   {% for service in category.list %}
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="{{ service.id }}" id="id_services_{{ service.id }}">
-                      <label class="form-check-label text-white" for="id_services_{{ service.id }}">{{ service.name }}</label>
+                      <input class="form-check-input" type="checkbox" name="services" value="{{ service.id }}" id="id_services_{{ service.id|add:-1 }}">
+                      <label class="form-check-label text-white" for="id_services_{{ service.id|add:-1 }}">{{ service.name }}</label>
                     </div>
                   {% endfor %}
                 {% endfor %}
