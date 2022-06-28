@@ -1,0 +1,58 @@
+<div class="row mb-5">
+  <h1>Hello, {{ client.user.full_name }}</h1>
+</div>
+
+<div class="row g-3 mb-5">
+  <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+    <div class="card bg-dark">
+      <h4 class="card-header">Cars</h4>
+      <div class="card-body">
+        <ul class="list-group mb-3">
+          {% if cars %}
+            {% for car in cars %}
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">{{ car.brand }} {{ car.model }}</div>
+                  <div class="text-secondary"><small>{{ car.color }}, {{ car.release_year }}</small></div>
+                </div>
+                <div class="row g-1">
+                  <div class="col">
+                    <button type="button" class="btn btn-primary btn-sm">Edit</button>
+                    <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+          {% else %}
+            You have no cars yet.
+          {% endif %}
+        </ul>
+        <a href="{% url 'accounts:car_create' %}" class="btn btn-primary">Add new car</a>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card bg-dark">
+      <h4 class="card-header">Auctions</h4>
+      <div class="card-body">
+        <h6 class="card-title">In progress</h6>
+        <div class="card-text mb-3">
+          <ul class="list-group list-group-flush">
+            {% for auction in auctions %}
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto my-auto">{{ auction.service.name }}</div>
+                <div class="row g-1">
+                  <div class="col">
+                    <small>{{ auction.datetime_end }}</small>
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <h6 class="card-title">Closed</h6>
+        <a href="{% url 'auctions:auction_list' %}" class="btn btn-primary">Go to auctions</a>
+      </div>
+    </div>
+  </div>
+</div>

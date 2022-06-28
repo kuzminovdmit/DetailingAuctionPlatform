@@ -1,0 +1,41 @@
+<div class="row mb-5">
+  <h1>Hello, {{ representative.user.full_name }}</h1>
+</div>
+
+<div class="row g-3 mb-5">
+  <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+    <div class="card bg-dark">
+      <h4 class="card-header">Your company</h4>
+      <div class="card-body">
+        <h5 class="card-title">{{ company.name }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ company.email }}</h6>
+        <p class="card-text">{{ company.description }}</p>
+        <a href="#" class="btn btn-primary">Edit</a>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card bg-dark">
+      <h4 class="card-header">Auctions</h4>
+      <div class="card-body">
+        <h6 class="card-title">In progress</h6>
+        <div class="card-text mb-3">
+          <ul class="list-group list-group-flush">
+            {% for auction in auctions %}
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto my-auto">{{ auction.service.name }}</div>
+                <div class="row g-1">
+                  <div class="col">
+                    <small>{{ auction.datetime_end }}</small>
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <h6 class="card-title">Closed</h6>
+        <a href="{% url 'auctions:auction_list' %}" class="btn btn-primary">Go to auctions</a>
+      </div>
+    </div>
+  </div>
+</div>

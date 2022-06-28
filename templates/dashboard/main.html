@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  {% if user_type == 'client' %}
+    {% include 'dashboard/client.html' %}
+  {% elif user_type == 'representative' %}
+    {% include 'dashboard/representative.html' %}
+  {% endif %}
+{% endblock %}
