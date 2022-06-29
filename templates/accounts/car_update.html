@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="mx-auto col-lg-8 card bg-dark">
+    <div class="row">
+      <div class="col-lg-6 col-md-5 col-sm-12">
+        <div class="card-body">
+          <h1>Edit car</h1>
+          <p>Text</p>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-7 col-sm-12">
+        <div class="card-body">
+          <div class="form px-1">
+            <form class="form-car-create" action="{% url 'accounts:car_edit' car.pk %}" method="post">
+              {% csrf_token %}
+              {{ form.errors }}
+              <div class="form-floating">
+                <input type="text" class="form-control car-brand" name="brand" id="id_brand" value="{{ car.brand }}" maxlength="128" required placeholder="{{ car.brand }}">
+                <label for="brand">Current brand</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control car-model" name="model" id="id_model" value="{{ car.model }}" maxlength="128" required placeholder="{{ car.model }}">
+                <label for="model">Current model</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control car-color" name="color" id="id_color" value="{{ car.color }}" maxlength="128" required placeholder="{{ car.color }}">
+                <label for="color">Current color</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control car-year" name="release_year" id="id_release_year" value="{{ car.release_year }}" maxlength="4" required placeholder="{{ car.release_year }}">
+                <label for="release_year">Current release_year</label>
+              </div>
+              <div class="d-flex justify-content-center">
+                <button class="btn btn-primary" type="submit">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

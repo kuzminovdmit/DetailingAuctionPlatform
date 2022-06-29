@@ -1,6 +1,6 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.views import LoginView
-from django.views.generic import CreateView, ListView, DetailView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 from django.urls import reverse_lazy
 
 from .forms import SignUpForm, CarCreationForm, CompanyCreationForm
@@ -35,6 +35,16 @@ class SignInView(LoginView):
         return super(SignInView, self).form_valid(form)
 
 
+class CarListView(ListView):
+    model = Car
+    template_name = 'accounts/car_list.html'
+
+
+class CarDetailView(DetailView):
+    model = Car
+    template_name = 'accounts/car_detail.html'
+
+
 class CarCreateView(CreateView):
     model = Car
     form_class = CarCreationForm
@@ -46,14 +56,26 @@ class CarCreateView(CreateView):
         return super(CarCreateView, self).form_valid(form)
 
 
-class CarDetailView(DetailView):
+class CarUpdateView(UpdateView):
     model = Car
-    template_name = 'accounts/car_detail.html'
+    form_class = CarCreationForm
+    template_name = 'accounts/car_update.html'
+    success_url = '/'
 
 
-class CarListView(ListView):
+class CarDeleteView(DeleteView):
     model = Car
-    template_name = 'accounts/car_list.html'
+    success_url = reverse_lazy('dashboard:main')
+
+
+class CompanyListView(ListView):
+    model = Company
+    template_name = 'accounts/company_list.html'
+
+
+class CompanyDetailView(DetailView):
+    model = Company
+    template_name = 'accounts/company_detail.html'
 
 
 class CompanyCreateView(CreateView):
@@ -67,3 +89,15 @@ class CompanyCreateView(CreateView):
             company=self.object
         )
         return reverse_lazy('dashboard:main')
+
+
+class CompanyUpdateView(UpdateView):
+    model = Company
+    form_class = CompanyCreationForm
+    template_name = 'accounts/company_update.html'
+    success_url = '/'
+
+
+class CompanyDeleteView(DeleteView):
+    model = Company
+    success_url = reverse_lazy('dashboard:main')
