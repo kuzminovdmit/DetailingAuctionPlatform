@@ -1,13 +1,13 @@
 from pathlib import Path
 
-import environ
+from environ import Env
 
 
-env = environ.Env(
-    DEBUG=(bool, False)
-)
 BASE_DIR = Path(__file__).resolve().parent.parent
-environ.Env.read_env(BASE_DIR / 'autoapp/.env')
+
+env = Env()
+Env.read_env(BASE_DIR / 'autoapp/.env')
+
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
@@ -32,13 +32,17 @@ LOGIN_URL = 'accounts/sign-in'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
 Q_CLUSTER = {
-    'name': 'DetailingAuction',
+    'name': env('REDIS_NAME'),
     'workers': 8,
     'recycle': 500,
     'timeout': 60,
@@ -48,8 +52,8 @@ Q_CLUSTER = {
     'cpu_affinity': 1,
     'label': 'Django Q',
     'redis': {
-        'host': '127.0.0.1',
-        'port': 6379,
+        'host': env('REDIS_HOST'),
+        'port': env('REDIS_PORT'),
         'db': 0
     }
 }
@@ -102,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-en'
+LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 USE_TZ = True
@@ -121,15 +125,10 @@ if DEBUG:
     INTERNAL_IPS = [
         "127.0.0.1",
     ]
-
     STATICFILES_DIRS = [
         'static/',
     ]
 else:
-    ALLOWED_HOSTS = [
-        'autoapp.eu.pythonanywhere.com',
-    ]
-
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
