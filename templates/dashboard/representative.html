@@ -10,31 +10,37 @@
         <h5 class="card-title">{{ company.name }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ company.email }}</h6>
         <p class="card-text">{{ company.description }}</p>
-        <a href="#" class="btn btn-primary">Edit</a>
+        <p class="card-text">
+          <strong>Services:</strong>
+          {% for service in company.services.all %}
+            {{ service.name }}
+          {% endfor %}
+        </p>
+        <a href="{% url 'accounts:company_edit' company.pk %}" class="btn btn-primary">Edit</a>
       </div>
     </div>
   </div>
   <div class="col">
     <div class="card bg-dark">
-      <h4 class="card-header">Auctions</h4>
+      <h4 class="card-header">Offers</h4>
       <div class="card-body">
-        <h6 class="card-title">In progress</h6>
         <div class="card-text mb-3">
           <ul class="list-group list-group-flush">
-            {% for auction in auctions %}
+            {% for offer in offers %}
               <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto my-auto">{{ auction.service.name }}</div>
+                <div class="ms-2 me-auto my-auto">{{ offer.auction }}</div>
                 <div class="row g-1">
                   <div class="col">
-                    <small>{{ auction.datetime_end }}</small>
+                    <small>{{ offer.cost }}, {{ offer.order_datetime_end }}</small>
                   </div>
                 </div>
               </li>
+            {% empty %}
+              You have no current offers.
             {% endfor %}
           </ul>
         </div>
-        <h6 class="card-title">Closed</h6>
-        <a href="{% url 'auctions:auction_list' %}" class="btn btn-primary">Go to auctions</a>
+        <a href="" class="btn btn-primary">Go to offers</a>
       </div>
     </div>
   </div>
