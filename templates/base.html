@@ -13,7 +13,7 @@
   <script src="https://unpkg.com/htmx.org@1.7.0" integrity="sha384-EzBXYPt0/T6gxNp0nuPtLkmRpmDBbjg6WmCUZRLXBBwYYmwAUxzlSGej0ARHX0Bo" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
   <nav class="navbar navbar-expand-lg navbar-dark p-5">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">
