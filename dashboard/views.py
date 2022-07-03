@@ -30,12 +30,15 @@ class MainView(LoginRequiredMixin, TemplateView):
         user = self.request.user
 
         if user.is_client:
+            client = Client.objects.get(user=user)
+            cars = Car.objects.filter(client=client)
+            
             context.update({
                 'user_type': 'client',
-                'client': Client.objects.get(user=user),
-                'cars': Car.objects.filter(client__user=user),
-                'auctions_in_progress': Auction.objects.filter(car__client__user=user, is_ended=False),
-                'auctions_closed': Auction.objects.filter(car__client__user=user, is_ended=True),
+                'client': client,
+                'cars': cars,
+                'auctions_in_progress': Auction.objects.filter(car__in=cars, is_ended=False),
+                'auctions_closed': Auction.objects.filter(car__in=cars, is_ended=True),
             })
 
         if user.is_representative:
