@@ -12,36 +12,34 @@
       </div>
       <div class="col-lg-6 col-md-7 col-sm-12">
         <div class="card-body">
-          {{ form.errors }}
-          <div class="form px-1">
-            <form id="sign_in" class="form-company-create" action="{% url 'accounts:company_edit' company.pk %}" method="post">
-              {% csrf_token %}
-              <div class="form-floating">
-                <input type="text" class="form-control company-name" name="name" id="id_name" value="{{ company.name }}" maxlength="128" required placeholder="{{ company.name }}">
-                <label for="brand">Current name</label>
-              </div>
-              <div class="form-floating">
-                <input type="email" class="form-control company-email" name="email" required id="id_email" value="{{ company.email }}" placeholder="{{ company.email }}">
-                <label for="id_email">Current company email</label>
-              </div>
-              <div class="form-floating mt-3 mb-3" id="id_services">
-                <h5>Choose provided services</h5>
-                {% regroup form.services.field.queryset by get_category_display as categories %}
-                {% for category in categories %}
-                  <h6 class="mt-2">{{ category.grouper }}</h6>
-                  {% for service in category.list %}
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" {% if service.id in form.services.value %}checked{% endif %} name="services" value="{{ service.id }}" id="id_services_{{ service.id|add:-1 }}">
-                      <label class="form-check-label text-white" for="id_services_{{ service.id|add:-1 }}">{{ service.name }}</label>
-                    </div>
-                  {% endfor %}
+          <form class="row g-3" action="{% url 'accounts:company_edit' company.pk %}" method="post">
+            {% csrf_token %}
+            {{ form.errors }}
+            <div class="col-12">
+              <label class="form-label" for="id_name">Name of company</label>
+              <input type="text" class="form-control" name="name" id="id_name" maxlength="128" required value="{{ company.name }}">
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="id_email">Company email</label>
+              <input type="text" class="form-control" name="email" id="id_email" maxlength="128" required value="{{ company.email }}">
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="id_color">Choose provided services</label>
+              {% regroup form.services.field.queryset by get_category_display as categories %}
+              {% for category in categories %}
+                <h6 class="mt-2">{{ category.grouper }}</h6>
+                {% for service in category.list %}
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="services" {% if service.id in form.services.value %}checked{% endif %} name="services" value="{{ service.id }}" id="id_services_{{ service.id|add:-1 }}">
+                    <label class="form-check-label text-white" for="id_services_{{ service.id|add:-1 }}">{{ service.name }}</label>
+                  </div>
                 {% endfor %}
-              </div>
-              <div class="d-flex justify-content-center">
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Save</button>
-              </div>
-            </form>
-          </div>
+              {% endfor %}
+            </div>
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-primary" type="submit">Save</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
