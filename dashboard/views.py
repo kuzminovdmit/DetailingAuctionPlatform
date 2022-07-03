@@ -3,7 +3,8 @@ from django.views.generic import TemplateView
 from django.shortcuts import redirect
 from django.urls import reverse
 
-from accounts.models import User, Client, Representative, Car, Company
+from accounts.models import Client, Representative, Car, Company
+from auctions.models import Auction
 
 
 class MainView(LoginRequiredMixin, TemplateView):
@@ -11,7 +12,11 @@ class MainView(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard/main.html'
 
     def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+
         user = request.user
+
         if user.is_staff:
             return redirect(reverse('admin:index'))
 
@@ -28,13 +33,9 @@ class MainView(LoginRequiredMixin, TemplateView):
             context.update({
                 'user_type': 'client',
                 'client': Client.objects.get(user=user),
-                'cars': Car.objects.filter(client__user=user)
-            })
-        elif user.is_representative:
-            context.update({
-                'user_type': 'representative',
-                'representative': Representative.objects.get(user=user),
-                'company': Company.objects.get(representative__user=user)
+                'cars': Car.objects.filter(client__user=user),
+                'auctions_in_progress': Auction.objects.filter(car__client__user=user, is_ended=False),
+                'auctions_closed': Auction.objects.filter(car__client__user=user, is_ended=True),
             })
 
         return context

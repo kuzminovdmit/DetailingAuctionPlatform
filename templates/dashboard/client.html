@@ -7,25 +7,24 @@
     <div class="card bg-dark">
       <h4 class="card-header">Cars</h4>
       <div class="card-body">
-        <ul class="list-group mb-3">
-          {% if cars %}
-            {% for car in cars %}
-              <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                  <div class="fw-bold">{{ car.brand }} {{ car.model }}</div>
-                  <div class="text-secondary"><small>{{ car.color }}, {{ car.release_year }}</small></div>
+      {% csrf_token %}
+        <ul class="list-group mb-3" id="car-list" >
+          {% for car in cars %}
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">{{ car.brand }} {{ car.model }}</div>
+                <div class="text-secondary"><small>{{ car.color }}, {{ car.release_year }}</small></div>
+              </div>
+              <div class="row g-1">
+                <div class="col">
+                  <a href="{% url 'accounts:car_edit' car.pk %}" class="btn btn-primary btn-sm">Edit</a>
+                  <button type="submit" class="btn btn-danger btn-sm" hx-delete="{% url 'accounts:car_delete' car.pk %}" hx-confirm="Are you sure?" hx-target="#car-list" hx-swap="outerHTML swap:1s">Delete</button>
                 </div>
-                <div class="row g-1">
-                  <div class="col">
-                    <button type="button" class="btn btn-primary btn-sm">Edit</button>
-                    <button type="button" class="btn btn-danger btn-sm">Delete</button>
-                  </div>
-                </div>
-              </li>
-            {% endfor %}
-          {% else %}
+              </div>
+            </li>
+          {% empty %}
             You have no cars yet.
-          {% endif %}
+          {% endfor %}
         </ul>
         <a href="{% url 'accounts:car_create' %}" class="btn btn-primary">Add new car</a>
       </div>
@@ -35,10 +34,10 @@
     <div class="card bg-dark">
       <h4 class="card-header">Auctions</h4>
       <div class="card-body">
-        <h6 class="card-title">In progress</h6>
+        <h5 class="card-title">In progress</h5>
         <div class="card-text mb-3">
           <ul class="list-group list-group-flush">
-            {% for auction in auctions %}
+            {% for auction in auctions_in_progress %}
               <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto my-auto">{{ auction.service.name }}</div>
                 <div class="row g-1">
@@ -47,10 +46,28 @@
                   </div>
                 </div>
               </li>
+            {% empty %}
+              You have no current auctions.
             {% endfor %}
           </ul>
         </div>
-        <h6 class="card-title">Closed</h6>
+        <h5 class="card-title">Closed</h5>
+      <div class="card-text mb-3">
+          <ul class="list-group list-group-flush">
+            {% for auction in closed_auctions %}
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto my-auto">{{ auction.service.name }}</div>
+                <div class="row g-1">
+                  <div class="col">
+                    <small>{{ auction.datetime_end }}</small>
+                  </div>
+                </div>
+              </li>
+            {% empty %}
+              You have no closed auctions.
+            {% endfor %}
+          </ul>
+        </div>
         <a href="{% url 'auctions:auction_list' %}" class="btn btn-primary">Go to auctions</a>
       </div>
     </div>
