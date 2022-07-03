@@ -4,7 +4,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView, D
 from django.urls import reverse_lazy
 
 from .forms import SignUpForm, CarCreationForm, CompanyCreationForm
-from .models import Car, Company, Representative
+from .models import Client, Car, Company, Representative
 
 
 class SignUpView(CreateView):
@@ -52,7 +52,8 @@ class CarCreateView(CreateView):
     success_url = '/'
 
     def form_valid(self, form):
-        form.instance.client = self.request.user.client
+        client = Client.objects.create(user=self.request.user)
+        form.instance.client = client
         return super(CarCreateView, self).form_valid(form)
 
 
