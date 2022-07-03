@@ -10,7 +10,6 @@ class UserAdmin(BaseUserAdmin):
         ('Personal information', {'fields': (
             'first_name',
             'last_name',
-            'phone_number',
         )}),
         ('Permissions', {'fields': (
             'is_active',

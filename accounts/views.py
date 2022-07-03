@@ -2,6 +2,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.views import LoginView
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 from django.urls import reverse_lazy
+from django.shortcuts import redirect
 
 from .forms import SignUpForm, CarCreationForm, CompanyCreationForm
 from .models import Client, Car, Company, Representative
@@ -13,12 +14,10 @@ class SignUpView(CreateView):
     success_url = reverse_lazy('accounts:choose_account')
 
     def form_valid(self, form):
-        authenticate(
-            email=form.cleaned_data.get('email'),
-            password=form.cleaned_data.get('password1')
-        )
-        login(self.request, form.save())
-        return super(SignUpView, self).form_valid(form)
+        user = form.save()
+        login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
+
+        return redirect(self.success_url)
 
 
 class SignInView(LoginView):
