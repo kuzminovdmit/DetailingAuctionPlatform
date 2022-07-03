@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 
 from accounts.models import Client, Representative, Car, Company
-from auctions.models import Auction, Offer
+from auctions.models import Auction, Offer, Order
 
 
 class MainView(LoginRequiredMixin, TemplateView):
@@ -32,24 +32,27 @@ class MainView(LoginRequiredMixin, TemplateView):
         if user.is_client:
             client = Client.objects.get(user=user)
             cars = Car.objects.filter(client=client)
-            
+
             context.update({
                 'user_type': 'client',
                 'client': client,
                 'cars': cars,
                 'auctions_in_progress': Auction.objects.filter(car__in=cars, is_ended=False),
                 'auctions_closed': Auction.objects.filter(car__in=cars, is_ended=True),
+                'orders': Order.objects.filter(offer__auction__car__in=cars)
             })
 
         if user.is_representative:
             representative = Representative.objects.get(user=user)
             company = Company.objects.get(representative=representative)
+            offers = Offer.objects.filter(company=company).select_related('auction')
 
             context.update({
                 'user_type': 'representative',
                 'representative': representative,
                 'company': company,
-                'offers': Offer.objects.filter(company=company).select_related('auction'),
+                'offers': offers,
+                'orders': Order.objects.filter(offer__in=offers)
             })
 
         return context

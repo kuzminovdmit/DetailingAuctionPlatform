@@ -51,6 +51,7 @@ class Offer(models.Model):
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
     cost = models.PositiveSmallIntegerField()
     order_datetime_end = models.DateTimeField()
+    is_chosen = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ['company', 'auction']

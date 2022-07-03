@@ -28,7 +28,7 @@
           <ul class="list-group list-group-flush">
             {% for offer in offers %}
               <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto my-auto">{{ offer.auction }}</div>
+                <div class="ms-2 me-auto my-auto">{{ offer }}</div>
                 <div class="row g-1">
                   <div class="col">
                     <small>{{ offer.cost }}, {{ offer.order_datetime_end }}</small>
@@ -41,6 +41,30 @@
           </ul>
         </div>
         <a href="" class="btn btn-primary">Go to offers</a>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card bg-dark">
+      <h4 class="card-header">Orders</h4>
+      <div class="card-body">
+        <div class="card-text mb-3">
+          <ul class="list-group list-group-flush">
+            {% for order in orders %}
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto my-auto">{{ order }}</div>
+                <div class="row g-1">
+                  <div class="col">
+                    <small>{{ order.datetime_start }}</small>
+                  </div>
+                </div>
+              </li>
+            {% empty %}
+              You have no current orders.
+            {% endfor %}
+          </ul>
+        </div>
+        <a href="" class="btn btn-primary">Go to orders</a>
       </div>
     </div>
   </div>
