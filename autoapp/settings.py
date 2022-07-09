@@ -23,6 +23,7 @@ INSTALLED_APPS = [
 
     'accounts',
     'auctions',
+    'offers',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'

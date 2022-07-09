@@ -4,7 +4,8 @@ from django.shortcuts import redirect
 from django.urls import reverse
 
 from accounts.models import Client, Representative, Car, Company
-from auctions.models import Auction, Offer, Order
+from auctions.models import Auction, Order
+from offers.models import Offer
 
 
 class MainView(LoginRequiredMixin, TemplateView):

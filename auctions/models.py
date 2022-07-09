@@ -4,8 +4,6 @@ from django.db import models
 from django.urls import reverse
 from django_q.models import Schedule
 
-from accounts.models import Car, Company
-
 
 class Service(models.Model):
     CATEGORY_CHOICES = (
@@ -31,7 +29,7 @@ class Auction(models.Model):
         (SLOW, '1 day'),
     )
 
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    car = models.ForeignKey('accounts.Car', on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     start_cost = models.PositiveSmallIntegerField()
 
@@ -58,22 +56,8 @@ class Auction(models.Model):
         super(Auction, self).save(*args, **kwargs)
 
 
-class Offer(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    cost = models.PositiveSmallIntegerField()
-    order_datetime_end = models.DateTimeField()
-    is_chosen = models.BooleanField(default=False)
-
-    class Meta:
-        unique_together = ['company', 'auction']
-
-    def __str__(self):
-        return f'Offer №{self.pk}'
-
-
 class Order(models.Model):
-    offer = models.OneToOneField(Offer, on_delete=models.CASCADE)
+    offer = models.OneToOneField('offers.Offer', on_delete=models.CASCADE)
     datetime_start = models.DateTimeField(auto_now_add=True)
     is_completed = models.BooleanField(default=False)
 
