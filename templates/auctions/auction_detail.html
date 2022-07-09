@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="row g-3 mt-3">
+      <div class="col-12">
+        <div class="card bg-dark">
+          <h5 class="card-header">
+            <nav class="pt-2 ps-2">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard:main' %}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'auctions:auction_list' %}">Auctions</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ auction }}</li>
+              </ol>
+            </nav>
+          </h5>
+          <div class="card-body">
+            <h1 class="display-1">
+              <strong>Service:</strong> {{ auction.service.name }}
+            </h1>
+            <h1 class="display-6 text-muted"><strong>Category:</strong> {{ auction.service.get_category_display }}</h1>
+            <dl class="row mt-5">
+              <dt class="col-lg-1">Client</dt>
+              <dd class="col-lg-11">
+                <p>{{ auction.car.client.user.full_name }}</p>
+                <p>{{ auction.car.client.user.email }}</p>
+              </dd>
+              <dt class="col-lg-1">Car</dt>
+              <dd class="col-lg-11">{{ auction.car.release_year }} {{ auction.car.brand }} {{ auction.car.model }} {{ auction.car.color }}</dd>
+              <dt class="col-lg-1">Time</dt>
+              <dd class="col-lg-11">{{ auction.duration_choice }}</dd>
+            </dl>
+            <div class="row mt-5">
+              <div class="col">
+                <a href="{% url 'auctions:auction_update' auction.pk %}" class="btn btn-primary">Edit</a>
+                <a hx-delete="{% url 'auctions:auction_delete' auction.pk 1 %}" hx-confirm="Are you sure you want to delete this auction?" class="btn btn-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+{% endblock %}

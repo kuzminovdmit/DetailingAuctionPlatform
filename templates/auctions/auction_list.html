@@ -1,41 +1,7 @@
-<div class="row g-3 mt-3">
-  {% for auction in auctions %}
-    <div class="col-sm-6">
-      <div class="card bg-dark">
-        <div class="card-body">
-          <h5 class="card-title"><span class="badge bg-info">Auction</span> {{ auction.service }}</h5>
-          <p class="card-text">
-            <small class="datetime-end">{{ auction.datetime_end|date:'Y-m-d H:i:s' }}</small>
-          </p>
-          <div class="timer"></div>
-          <a href="" class="btn btn-primary">Edit</a>
-          <a href="" class="btn btn-danger">Delete</a>
-        </div>
-      </div>
-    </div>
-  {% endfor %}
-</div>
+{% extends 'base.html' %}
+{% load static %}
 
-<script>
-    document.querySelectorAll('.col-sm-6').forEach(function(item) {
-        let timer = item.getElementsByClassName('timer')[0];
-        let datetimeEnd = Date.parse(item.getElementsByClassName('datetime-end')[0].innerHTML)
-
-        const timerInterval = setInterval(() => {
-            let diff = datetimeEnd - Date.now();
-            const days = Math.floor(diff / 86400000);
-            diff -= days * 86400000;
-            const hours = Math.floor(diff / 3600000);
-            diff -= hours * 3600000;
-            const mins = Math.floor(diff / 60000);
-            diff -= mins * 60000;
-            const secs = Math.floor(diff / 1000);
-            timer.innerHTML = `${hours}:${mins}:${secs}`
-        }, 1000);
-
-        setTimeout(() => {
-            clearInterval(timerInterval);
-            item.remove()
-        }, datetimeEnd - Date.now());
-    });
-</script>
+{% block content %}
+  <h1 class="display-1">Auctions</h1>
+  {% include 'auctions/auctions_items.html' %}
+{% endblock %}

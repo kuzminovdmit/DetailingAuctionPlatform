@@ -5,52 +5,50 @@
     <div class="row">
       <div class="col-lg-6 col-md-5 col-sm-12">
         <div class="card-body">
-          <h1>Create new auction</h1>
-          <p>Text</p>
+          <h1>Edit auction</h1>
+          <h3>{{ auction }}</h3>
+          <dl class="row mt-3">
+            <dt class="col-3 col-md-2 col-lg-2">Car</dt>
+            <dd class="col-9 col-md-10 col-lg-10">{{ auction.car }}</dd>
+          </dl>
         </div>
       </div>
       <div class="col-lg-6 col-md-7 col-sm-12">
         <div class="card-body">
-          <form class="row g-3" action="{% url 'auctions:auction_create' %}" method="post">
+          <form class="row g-3" action="{% url 'auctions:auction_update' auction.pk %}" method="post">
             {% csrf_token %}
             {{ form.errors }}
-            <div class="col-12">
-              <select class="form-select" id="id_car" name="car">
-                <option selected>Choose a car</option>
-                {% for car in form.car.field.queryset %}
-                  <option value="{{ car.id }}">{{ car }}</option>
-                {% endfor %}
-              </select>
-            </div>
+            <input type="hidden" id="id_car" name="car" value="{{ auction.car.id }}">
             <div class="col-12">
               {% regroup form.service.field.queryset by get_category_display as categories %}
               <select class="form-select" id="id_service" name="service">
-                <option selected>Choose a service</option>
+                <option>Choose a service</option>
                 {% for category in categories %}
                   <optgroup label="{{ category.grouper }}">
                     {% for service in category.list %}
-                      <option value="{{ service.id }}">{{ service.name }}</option>
+                      <option {% if form.initial.service == service.id %}selected{% endif %} value="{{ service.id }}">{{ service.name }}</option>
                     {% endfor %}
                   </optgroup>
                 {% endfor %}
               </select>
             </div>
             <div class="col-12">
+            {{ form.duration.value }}
               <select class="form-select" id="id_duration_choice" name="duration_choice">
-                <option selected>Choose a duration</option>
+                <option>Choose a duration</option>
                 {% for duration in form.fields.duration_choice.choices %}
-                  <option value="{{ duration.0 }}">{{ duration.1 }}</option>
+                  <option {% if form.initial.duration_choice == duration.0 %}selected{% endif %} value="{{ duration.0 }}">{{ duration.1 }}</option>
                 {% endfor %}
               </select>
             </div>
             <div class="col-12">
               <div class="input-group">
                 <span class="input-group-text">$</span>
-                <input class="form-control" type="number" name="start_cost" placeholder="Enter starting price" required id="id_start_cost">
+                <input class="form-control" type="number" name="start_cost" placeholder="Enter starting price" value="{{ form.start_cost.value }}" readonly id="id_start_cost">
               </div>
             </div>
             <div class="d-flex justify-content-center">
-              <button class="btn btn-primary" type="submit">Create</button>
+              <button class="btn btn-primary" type="submit">Save</button>
             </div>
           </form>
         </div>

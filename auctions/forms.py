@@ -15,4 +15,4 @@ class AuctionCreationForm(forms.ModelForm):
 
     def __init__(self, user, *args, **kwargs):
         super(AuctionCreationForm, self).__init__(*args, **kwargs)
-        self.fields['car'] = forms.ModelChoiceField(queryset=Car.objects.filter(client=user))
+        self.fields['car'] = forms.ModelChoiceField(queryset=Car.objects.filter(client__user=user))

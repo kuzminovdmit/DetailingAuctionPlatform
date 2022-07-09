@@ -9,8 +9,6 @@
   <title>DetailingAuction</title>
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
-  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-  <script src="https://unpkg.com/htmx.org@1.7.0" integrity="sha384-EzBXYPt0/T6gxNp0nuPtLkmRpmDBbjg6WmCUZRLXBBwYYmwAUxzlSGej0ARHX0Bo" crossorigin="anonymous"></script>
 </head>
 
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
@@ -49,6 +47,8 @@
     {% block content %}
     {% endblock %}
   </div>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="https://unpkg.com/htmx.org@1.7.0" integrity="sha384-EzBXYPt0/T6gxNp0nuPtLkmRpmDBbjg6WmCUZRLXBBwYYmwAUxzlSGej0ARHX0Bo" crossorigin="anonymous"></script>
 </body>
 
 </html>
