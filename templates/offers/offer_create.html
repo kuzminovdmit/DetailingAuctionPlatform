@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="mx-auto col-lg-8 card bg-dark">
+    <div class="row">
+      <div class="col-lg-6 col-md-5 col-sm-12">
+        <div class="card-body">
+          <h1>Create new offer</h1>
+          <p>For <a href="{{ auction.get_absolute_url }}">{{ auction }}</a></p>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-7 col-sm-12">
+        <div class="card-body">
+          <form class="row g-3" action="{% url 'offers:offer_create' auction.pk %}" method="post">
+            {% csrf_token %}
+            {{ form.errors }}
+            <div class="col-12">
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input class="form-control" type="number" name="cost" placeholder="Enter your price" required id="id_cost">
+              </div>
+            </div>
+            <div class="col-12">
+              <div class='input-group' id='id_order_datetime_end' data-td-target-input='nearest' data-td-target-toggle='nearest'>
+                <input id='id_order_datetime_end' type='text' name="order_datetime_end" class='form-control' data-td-target='#id_order_datetime_end'/>
+                <span class='input-group-text' data-td-target='#id_order_datetime_end' data-td-toggle='datetimepicker'>
+                  <span class='fa-solid fa-calendar'></span>
+                </span>
+              </div>
+            </div>
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-primary" type="submit">Make an offer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+      new tempusDominus.TempusDominus(document.getElementById('id_order_datetime_end'), {
+          display: {
+              components: {
+                  useTwentyfourHour: true,
+              }
+          }
+      });
+  </script>
+{% endblock %}
