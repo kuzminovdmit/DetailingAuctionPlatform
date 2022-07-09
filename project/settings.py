@@ -6,7 +6,7 @@ from environ import Env
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = Env()
-Env.read_env(BASE_DIR / 'autoapp/.env')
+Env.read_env(BASE_DIR / 'project/.env')
 
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
@@ -68,7 +68,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'autoapp.urls'
+ROOT_URLCONF = 'project.urls'
 
 TEMPLATES = [
     {
@@ -89,7 +89,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'autoapp.wsgi.application'
+WSGI_APPLICATION = 'project.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
