@@ -14,7 +14,17 @@ class AuctionListView(ListView):
     template_name = 'auctions/auction_list.html'
 
     def get_queryset(self):
-        return Auction.objects.filter(car__client__user=self.request.user).select_related('service')
+        user = self.request.user
+
+        if user.is_client:
+            queryset = Auction.objects.filter(car__client__user=user).select_related('service')
+        elif user.is_representative:
+            queryset = Auction.objects.filter(
+                is_ended=False, service__in=user.representative.company.services.all()).select_related('service')
+        else:
+            queryset = Auction.objects.all()
+
+        return queryset
 
 
 class AuctionCreateView(CreateView):

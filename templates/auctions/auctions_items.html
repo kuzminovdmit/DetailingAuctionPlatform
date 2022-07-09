@@ -1,13 +1,15 @@
 <div class="row g-3 mt-3" id="auctions" hx-confirm="Are you sure you want to delete this auction?" hx-target="#auctions" hx-swap="outerHTML">
-  <div class="col-12 col-lg-4 col-md-6">
-    <div class="card bg-dark">
-      <div class="card-body">
-        <h4 class="card-title">Create new auction</h4>
-        <p class="card-text">Lorem ipsum dolor amet</p>
-        <a href="{% url 'auctions:auction_create' %}" class="btn btn-primary">Create</a>
+  {% if request.user.is_client %}
+    <div class="col-12 col-lg-4 col-md-6">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <h4 class="card-title">Create new auction</h4>
+          <p class="card-text">Lorem ipsum dolor amet</p>
+          <a href="{% url 'auctions:auction_create' %}" class="btn btn-primary">Create</a>
+        </div>
       </div>
     </div>
-  </div>
+  {% endif %}
   {% for auction in auctions %}
     <div class="col-12 col-lg-4 col-md-6">
       <div class="card bg-dark">
@@ -17,8 +19,12 @@
             <small>{{ auction.datetime_end|date:'Y-m-d H:i:s' }}</small>
           </p>
           <div class="btn-toolbar" role="toolbar">
-            <a href="{% url 'auctions:auction_update' auction.pk %}" class="btn btn-primary me-2">Edit</a>
-            <a class="btn btn-danger" hx-delete="{% url 'auctions:auction_delete' auction.pk 0 %}">Delete</a>
+            {% if request.user.is_client %}
+              <a href="{% url 'auctions:auction_update' auction.pk %}" class="btn btn-primary me-2">Edit</a>
+              <a class="btn btn-danger" hx-delete="{% url 'auctions:auction_delete' auction.pk 0 %}">Delete</a>
+            {% elif request.user.is_representative %}
+              <a href="{% url 'offers:offer_create' auction.pk %}" class="btn btn-primary me-2">Make an offer</a>
+            {% endif %}
           </div>
         </div>
       </div>
