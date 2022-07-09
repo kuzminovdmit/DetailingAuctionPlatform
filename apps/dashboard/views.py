@@ -3,9 +3,9 @@ from django.views.generic import TemplateView
 from django.shortcuts import redirect
 from django.urls import reverse
 
-from accounts.models import Client, Representative, Car, Company
-from auctions.models import Auction, Order
-from offers.models import Offer
+from apps.accounts.models import Client, Representative, Car, Company
+from apps.auctions.models import Auction, Order
+from apps.offers.models import Offer
 
 
 class MainView(LoginRequiredMixin, TemplateView):

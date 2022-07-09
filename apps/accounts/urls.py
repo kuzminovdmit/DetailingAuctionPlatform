@@ -15,8 +15,8 @@ urlpatterns = [
     path('sign-in', SignInView.as_view(), name='sign_in'),
     path('choose-account', TemplateView.as_view(
         template_name='accounts/choose_account.html'),
-        name='choose_account'
-    ),
+         name='choose_account'
+         ),
     path('change-password', PasswordChangeView.as_view(
         template_name='accounts/password_change.html',
         success_url=reverse_lazy('dashboard:main'),

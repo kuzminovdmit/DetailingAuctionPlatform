@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from auctions.models import Service
+from apps.auctions.models import Service
 from .models import User, Car, Company
 
 

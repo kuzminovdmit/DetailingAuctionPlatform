@@ -21,9 +21,9 @@ INSTALLED_APPS = [
 
     'django_q',
 
-    'accounts',
-    'auctions',
-    'offers',
+    'apps.accounts',
+    'apps.auctions',
+    'apps.offers',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'

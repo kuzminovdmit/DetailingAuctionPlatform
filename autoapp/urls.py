@@ -4,10 +4,10 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('', include('dashboard.urls', namespace='dashboard')),
-    path('accounts/', include('accounts.urls', namespace='accounts')),
-    path('auctions/', include('auctions.urls', namespace='auctions')),
-    path('offers/', include('offers.urls', namespace='offers')),
+    path('', include('apps.dashboard.urls', namespace='dashboard')),
+    path('accounts/', include('apps.accounts.urls', namespace='accounts')),
+    path('auctions/', include('apps.auctions.urls', namespace='auctions')),
+    path('offers/', include('apps.offers.urls', namespace='offers')),
 ]
 
 if settings.DEBUG:

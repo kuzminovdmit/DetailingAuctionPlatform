@@ -1,7 +1,7 @@
 from django.views.generic import CreateView
 
-from accounts.models import Company
-from auctions.models import Auction
+from apps.accounts.models import Company
+from apps.auctions.models import Auction
 
 from .forms import OfferCreationForm
 from .models import Offer

@@ -1,6 +1,6 @@
 from django import forms
 
-from accounts.models import Car
+from apps.accounts.models import Car
 
 from .models import Auction, Service
 
