@@ -1,28 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="row mb-5">
-    <h1>Choose the type of your account</h1>
-  </div>
-
   <div class="row g-3 mb-5">
-    <div class="col-sm-6">
-      <div class="card bg-dark">
-        <div class="card-body">
-          <h5 class="card-title">Client account</h5>
-          <p class="card-text">Add your car to get the opportunity to create auction on performing service to your car.</p>
-          <a href="{% url 'accounts:car_create' %}" class="btn btn-primary">Add car</a>
+    <h1 class="display-1">Choose the type of your account</h1>
+    <div class="col-12 col-lg-6">
+      <a href="{% url 'accounts:car_create' %}" class="card bg-dark" style="height: 274px; text-decoration: none;">
+        <div class="card-body d-flex align-items-center justify-content-center">
+          <h3 class="display-3 text-center">I am a client</h3>
         </div>
-      </div>
+      </a>
     </div>
-    <div class="col-sm-6">
-      <div class="card bg-dark">
-        <div class="card-body">
-          <h5 class="card-title">Representative account</h5>
-          <p class="card-text">Add your company to have ability to take a part in auctions and perform services.</p>
-          <a href="{% url 'accounts:company_create' %}" class="btn btn-primary">Add company</a>
+    <div class="col-12 col-lg-6">
+      <a href="{% url 'accounts:company_create' %}" class="card bg-dark" style="height: 274px; text-decoration: none;">
+        <div class="card-body d-flex align-items-center justify-content-center">
+          <h3 class="display-3 text-center">I am a representative</h3>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 {% endblock %}

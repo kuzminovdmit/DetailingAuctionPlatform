@@ -21,21 +21,22 @@ class SignUpForm(UserCreationForm):
 
 
 class CarCreationForm(forms.ModelForm):
-    brand = forms.CharField(max_length=128)
-    color = forms.CharField(max_length=128)
-    release_year = forms.CharField(max_length=4)
-    model = forms.CharField(max_length=128)
+    brand = forms.CharField(max_length=128, required=True)
+    model = forms.CharField(max_length=128, required=True)
+    color = forms.CharField(max_length=128, required=True)
+    release_year = forms.CharField(max_length=4, required=True)
 
     class Meta:
         model = Car
-        fields = ['brand', 'color', 'release_year', 'model']
+        fields = ['brand', 'model', 'color', 'release_year']
 
 
 class CompanyCreationForm(forms.ModelForm):
-    name = forms.CharField(max_length=128)
+    name = forms.CharField(max_length=128, required=True)
     services = forms.ModelMultipleChoiceField(
         queryset=Service.objects.all(),
-        widget=forms.CheckboxSelectMultiple
+        widget=forms.CheckboxSelectMultiple,
+        required=False
     )
     email = forms.EmailField(required=True)
 

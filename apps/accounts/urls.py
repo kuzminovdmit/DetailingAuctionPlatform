@@ -29,12 +29,12 @@ urlpatterns = [
     path('cars', CarListView.as_view(), name='car_list'),
     path('cars/<int:pk>', CarDetailView.as_view(), name='car_detail'),
     path('cars/create', CarCreateView.as_view(), name='car_create'),
-    path('cars/<int:pk>/edit', CarUpdateView.as_view(), name='car_edit'),
+    path('cars/<int:pk>/update', CarUpdateView.as_view(), name='car_update'),
     path('cars/<int:pk>/delete', CarDeleteView.as_view(), name='car_delete'),
 
     path('companies', CompanyListView.as_view(), name='company_list'),
     path('companies/<int:pk>', CompanyDetailView.as_view(), name='company_detail'),
     path('companies/create', CompanyCreateView.as_view(), name='company_create'),
-    path('companies/<int:pk>/edit', CompanyUpdateView.as_view(), name='company_edit'),
+    path('companies/<int:pk>/update', CompanyUpdateView.as_view(), name='company_update'),
     path('companies/<int:pk>/delete', CompanyDeleteView.as_view(), name='company_delete'),
 ]

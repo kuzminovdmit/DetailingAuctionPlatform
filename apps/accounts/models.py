@@ -19,9 +19,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    def __str__(self):
-        return self.email
-
     @property
     def full_name(self):
         return f'{self.first_name} {self.last_name}'.strip()
@@ -37,14 +34,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Company(models.Model):
     name = models.CharField(max_length=128)
-    services = models.ManyToManyField('auctions.Service')
+    services = models.ManyToManyField('auctions.Service', blank=True)
     email = models.EmailField(unique=True)
 
     class Meta:
         verbose_name_plural = 'companies'
-
-    def __str__(self):
-        return f'Company №{self.pk}'
 
 
 class Representative(models.Model):
@@ -53,9 +47,6 @@ class Representative(models.Model):
 
     class Meta:
         unique_together = ['user', 'company']
-
-    def __str__(self):
-        return f'Representative №{self.pk}'
 
 
 class Client(models.Model):
@@ -68,9 +59,6 @@ class Client(models.Model):
 class Car(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     brand = models.CharField(max_length=128)
+    model = models.CharField(max_length=128)
     color = models.CharField(max_length=128)
     release_year = models.CharField(max_length=4)
-    model = models.CharField(max_length=128)
-
-    def __str__(self) -> str:
-        return f'Car №{self.pk}'
