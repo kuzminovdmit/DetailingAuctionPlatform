@@ -6,24 +6,18 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
-  <title>DetailingAuction</title>
+  <title>DetailingAuctionPlatform</title>
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/tempus-dominus.css' %}">
-  <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'js/font-awesome.js' %}"></script>
-  <script src="{% static 'js/htmx.min.js' %}"></script>
-  <script src="{% static 'js/popper.min.js' %}"></script>
-  <script src="{% static 'js/tempus-dominus.js' %}"></script>
+  {% block static %}
+  {% endblock %}
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
   <nav class="navbar navbar-expand-lg navbar-dark p-5">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">
-        <img src="{% static 'img/logo.png' %}">
-      </a>
-      <a class="navbar-brand" href="/">DetailingAuction</a>
+      <a class="navbar-brand" href="/">DetailingAuctionPlatform</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
         aria-controls="navbarText" aria-expanded="false">
         <span class="navbar-toggler-icon"></span>

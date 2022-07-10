@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block static %}
+  <script src="{% static 'js/htmx.min.js' %}"></script>
+{% endblock %}
+
 {% block content %}
   <h1 class="display-1">Auctions</h1>
   {% include 'auctions/auctions_items.html' %}

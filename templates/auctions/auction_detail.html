@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block static %}
+  <script src="{% static 'js/htmx.min.js' %}"></script>
+{% endblock %}
+
 {% block content %}
   <div class="row g-3 mt-3">
       <div class="col-12">
