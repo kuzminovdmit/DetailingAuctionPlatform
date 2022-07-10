@@ -1,10 +1,19 @@
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
 from apps.accounts.models import Company
 from apps.auctions.models import Auction
 
 from .forms import OfferCreationForm
 from .models import Offer
+
+
+class OfferListView(ListView):
+    model = Offer
+    template_name = 'offers/offer_list.html'
+    context_object_name = 'offers'
+
+    def get_queryset(self, *args, **kwargs):
+        return Offer.objects.filter(company__representative__user=self.request.user)
 
 
 class OfferCreateView(CreateView):
